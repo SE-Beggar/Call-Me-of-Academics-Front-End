@@ -7,7 +7,8 @@ export default new Vuex.Store({
   state: {
     islogin:false,
     username:'',
-    email:''
+    email:'',
+    paperid
   },
   getters: {
   },

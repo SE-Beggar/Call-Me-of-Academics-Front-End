@@ -49,7 +49,7 @@
                     email: this.email
                     }
                     })
-                    .then(res => {              /* res 是 response 的缩写 */
+                    .then(res => {          
                     switch (res.data.errno) {
                         case 0:
                         this.$message.success("发送成功");
@@ -63,7 +63,7 @@
                     }
                     })
                     .catch(err => {
-                    console.log(err);         /* 若出现异常则在终端输出相关信息 */
+                    console.log(err);         
                     })
             },
             Register(){
