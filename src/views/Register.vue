@@ -11,7 +11,7 @@
             <label>邮箱</label>
             <input v-model="email" placeholder="请输入邮箱">
             <label>验证码</label>
-            <el-button type="info" slot="append" @click="send">发送验证码</el-button>   
+            <el-button type="info" class="code" @click="send">发送验证码</el-button>   
             <input v-model="code" placeholder="请输入验证码">
             <label>密码</label>
             <input v-model="password1" placeholder="请输入密码">
@@ -135,5 +135,8 @@
     .retl{
         position: absolute;
         left:20px;
+    }
+    .code{
+        float:right;
     }
 </style>
