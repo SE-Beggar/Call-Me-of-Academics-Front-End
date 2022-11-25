@@ -1,5 +1,6 @@
 <template>
     <div>
+        <el-button class="ret" type="primary" @click="ret">返回</el-button>
         <form class="form1">
             <h1>
                 登录
@@ -33,6 +34,9 @@
         methods:{
             gotoRegister(){
                 this.$router.push('/register');
+            },
+            ret(){
+                this.$router.back();
             },
             login(){
                 if(email==""||password==""){
@@ -95,6 +99,9 @@
         box-sizing: border-box;
     }
     label{
+        float:left;
+    }
+    .ret{
         float:left;
     }
 </style>
