@@ -15,6 +15,10 @@
             <a v-for="au in paper.autors">
                 {{au}};
             </a>
+            <h2>出版社</h2>
+            <a>
+                {{paper.publisher}}
+            </a>
             <h2>文献类型</h2>
             <a>
                 {{paper.type}}
@@ -38,6 +42,11 @@
                 <el-table-column
                     prop="autor"
                     label="作者"
+                    width="180">
+                </el-table-column>
+                <el-table-column
+                    prop="publisher"
+                    label="出版社"
                     width="180">
                 </el-table-column>
                 <el-table-column
@@ -78,7 +87,8 @@
                     autors:["xxx1","xxx2"],
                     time:"2001",
                     field:"领域",
-                    references:[{title:"参考文献1",autor:"第一作者",time:"202001"}],
+                    publisher:"这是出版社",
+                    references:[{title:"参考文献1",autor:"第一作者",publisher:"出版社1",time:"202001"}],
                 }
             }
         },
@@ -112,7 +122,7 @@
 
             },
             preview(){
-                
+
             }
         }
     }
