@@ -1,7 +1,11 @@
 <template>
   <div>
-    <div class="profile_hd">
-
+    <div class="user_box">
+    头像 名称<br/>
+    头像 简介
+    </div>
+    <div class="info_form">
+      其他全部个人信息列表
     </div>
   </div>
 </template>
@@ -23,8 +27,9 @@
 </script>
 
 <style scoped>
-.profile_hd{
+.user_box{
   width:100%;
-  border:2px black solid;
+  height: 200px;
+  border:4px black solid;
 }
 </style>
