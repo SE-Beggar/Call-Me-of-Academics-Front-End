@@ -29,6 +29,10 @@ const routes = [
     path: '/paperdetail',
     name: 'paperdetail',
     component: () => import('../views/Paperdetail.vue')
+  },{
+    path: '/profile',
+    name: 'profile',
+    component: () => import('../views/Profile.vue')
   }
 ]
 
