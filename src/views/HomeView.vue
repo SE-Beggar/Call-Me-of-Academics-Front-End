@@ -35,7 +35,6 @@ a:link,a:visited{
   font-weight:bold;
   font-size:24px;
   color:dodgerblue;
-  width:240px;
   text-align:center;
   padding:8px;
   text-decoration:none;

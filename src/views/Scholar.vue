@@ -128,35 +128,35 @@
 </style>
 
 <script>
-  import qs from "qs";
-  export default{
-    data(){
-      return{
-        user:{
-          username:"Lorem ipsum",
-          email:"lorem@ipsum.com",
-          profile:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, tenetur asperiores. Laborum sint id iste deleniti, aut labore placeat ipsam, accusantium magni tempore dolores numquam repudiandae aliquam quam aperiam cumque.",
-          password:"password",
-          identity:"普通用户"
-        },
-        form:{
-          username:"",
-          profile:"",
-          password0:"",
-          password1:"",
-          password2:""
-        },
-        panel:"info"
-      }
-    },
-    created(){
-      this.fillDefaultForm()
-    },
-    methods:{
-      fillDefaultForm(){
-        this.form.username=this.user.username
-        this.form.profile=this.user.profile
-      }
+import qs from "qs";
+export default{
+  data(){
+    return{
+      user:{
+        username:"Lorem ipsum",
+        email:"lorem@ipsum.com",
+        profile:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, tenetur asperiores. Laborum sint id iste deleniti, aut labore placeat ipsam, accusantium magni tempore dolores numquam repudiandae aliquam quam aperiam cumque.",
+        password:"password",
+        identity:"普通用户"
+      },
+      form:{
+        username:"",
+        profile:"",
+        password0:"",
+        password1:"",
+        password2:""
+      },
+      panel:"info"
+    }
+  },
+  created(){
+    this.fillDefaultForm()
+  },
+  methods:{
+    fillDefaultForm(){
+      this.form.username=this.user.username
+      this.form.profile=this.user.profile
     }
   }
+}
 </script>
