@@ -7,10 +7,10 @@
         </div>
         <div class="name_box">
           <div class="name">
-            <p>{{user.username}}</p>
+            <p>{{ scholar.username }}</p>
           </div>
           <div class="intro">
-            <p><b>个人简介：</b>{{user.profile}}</p>
+            <p><b>学者简介：</b>{{ scholar.scholar_info }}</p>
           </div>
         </div>
       </div>
@@ -18,30 +18,14 @@
     <div class="user_info">
       <div class="inner_box2">
         <el-tabs v-model="panel" @tab-click="">
-          <el-tab-pane label="个人信息" name="info">
-            <p class="info_entry"><b>用户名：</b>{{user.username}}</p>
-            <p class="info_entry"><b>邮箱：</b>{{user.email}}</p>
-            <p class="info_entry"><b>身份：</b>{{user.identity}}</p>
+          <el-tab-pane label="学者信息" name="info">
+
           </el-tab-pane>
-          <el-tab-pane label="信息修改" name="edit">
-            <el-form class="info_edit">
-              <el-form-item label="用户名">
-                <el-input class="infoInput" v-model="form.username"></el-input>
-              </el-form-item>
-              <el-form-item label="个人简介">
-                <el-input type="textarea" class="infoInput" v-model="form.profile"></el-input>
-              </el-form-item>
-              <el-form-item label="原密码">
-                <el-input type="password" class="infoInput" v-model="form.password0"></el-input>
-              </el-form-item>
-              <el-form-item label="新密码">
-                <el-input type="password" class="infoInput" v-model="form.password1"></el-input>
-              </el-form-item>
-              <el-form-item label="确认密码">
-                <el-input type="password" class="infoInput" v-model="form.password2"></el-input>
-              </el-form-item>
-              <el-button class="el_btn" @click="">保存修改</el-button>
-            </el-form>
+          <el-tab-pane label="信息统计" name="statistics">
+
+          </el-tab-pane>
+          <el-tab-pane label="信息分析" name="analysis">
+
           </el-tab-pane>
         </el-tabs>
       </div>
@@ -99,32 +83,6 @@
 .user_info{
   width: 100%;
 }
-.info_entry{
-  text-align: left;
-  margin: 20px 40px;
-  line-height: 32px;
-}
-.info_edit{
-  margin: 0 40px;
-}
-.el_btn{
-  width: 64%;
-  font-size:18px;
-  color:black;
-  background-color: white;
-  border-radius:20px;
-  border: 1px solid rgba(150, 169, 183, 0.413);
-  padding: 10px;
-  margin: 10px;
-  transition: 0.2s;
-}
-.el_btn:hover {
-  width: 72%;
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.25),0 4px 8px 0 rgba(0,0,0,0.20);
-}
-.el_btn:active {
-  background-color: #f7f7f7;
-}
 </style>
 
 <script>
@@ -132,31 +90,21 @@ import qs from "qs";
 export default{
   data(){
     return{
-      user:{
-        username:"Lorem ipsum",
+      scholar:{
+        username:"谭火彬",
         email:"lorem@ipsum.com",
-        profile:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, tenetur asperiores. Laborum sint id iste deleniti, aut labore placeat ipsam, accusantium magni tempore dolores numquam repudiandae aliquam quam aperiam cumque.",
+        scholar_info:"谭火彬，男，博士，副教授，研究生导师，现任职于北京航空航天大学。教学方面，承担了北航学院和软件学院多门程序设计和软件工程专业本科和研究生核心课程。主要从事软件工程、智能化软件和大数据分析等领域的教学和科研工作。",
         password:"password",
-        identity:"普通用户"
-      },
-      form:{
-        username:"",
-        profile:"",
-        password0:"",
-        password1:"",
-        password2:""
+        identity:"研究人员"
       },
       panel:"info"
     }
   },
   created(){
-    this.fillDefaultForm()
+
   },
   methods:{
-    fillDefaultForm(){
-      this.form.username=this.user.username
-      this.form.profile=this.user.profile
-    }
+
   }
 }
 </script>
