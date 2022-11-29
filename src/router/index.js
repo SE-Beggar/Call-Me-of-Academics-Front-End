@@ -29,6 +29,18 @@ const routes = [
     path: '/paperdetail',
     name: 'paperdetail',
     component: () => import('../views/Paperdetail.vue')
+  },{
+    path: '/main',
+    name: 'Main',
+    component: () => import('../views/Main.vue')
+  },{
+    path: '/searchPaper',
+    name: 'SearchPaper',
+    component: () => import('../views/SearchPaper.vue')
+  },{
+    path: '/searchAuthor',
+    name: 'SearchAuthor',
+    component: () => import('../views/SearchAuthor.vue')
   }
 ]
 
