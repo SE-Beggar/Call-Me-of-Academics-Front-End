@@ -5,6 +5,9 @@
     <br/>
     <a href="/register">注册页面</a>
     <a href="/login">登录页面</a>
+    <a href="/main">主页面</a>
+    <a href="/searchPaper">搜索论文页面</a>
+    <a href="/searchAuthor">搜索学者页面</a>
     <a href="/paperdetail">论文详情页面</a>
     <a href="/profile">个人信息页面</a>
     <a href="/scholar">学者个人信息页面</a>

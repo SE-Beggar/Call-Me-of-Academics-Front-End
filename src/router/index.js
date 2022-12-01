@@ -38,6 +38,18 @@ const routes = [
     name: 'scholar',
     component: () => import('../views/Scholar.vue')
   },{
+    path: '/main',
+    name: 'Main',
+    component: () => import('../views/Main.vue')
+  },{
+    path: '/searchPaper',
+    name: 'SearchPaper',
+    component: () => import('../views/SearchPaper.vue')
+  },{
+    path: '/searchAuthor',
+    name: 'SearchAuthor',
+    component: () => import('../views/SearchAuthor.vue')
+  },{
     path: '/testpage',
     name: 'testpage',
     component: () => import('../views/Testpage.vue')
