@@ -1,5 +1,18 @@
 >本分支将不定时合并各开发分支的内容，并对整体样式进行修改
 
+一些小寄巧：
+- 快速删除node_modules文件夹
+   1. 安装`rimraf`包，`npm i rimraf -g`
+   2. 在node_modules上一级文件夹打开终端，执行`rimraf node_modules`（**类似于`rm -rf`命令，慎用！**）
+- 将dev分支合并到你的分支
+    1. **首先检查dev分支的相关内容是否与你的分支内容一致**
+    2. 拉取远程代码 `git pull`
+    3. 如果本地还没有dev分支，使用以下命令来切换到dev分支并且将本地dev分支和远程dev分支关联起来，`git checkout -b dev origin/dev`
+    4. 进入你的个人分支(以pzp为例)`git checkout pzp`
+    5. 进行将dev分支合并进你的分支`git merge dev`
+    6. 如果有冲突需要手动解决冲突，可以使用以下命令查看当前目录下冲突文件`git diff --name-only --diff-filter=U`
+    7. 将有冲突的部分全部解决后，执行`git add`和`git commit`指令后合并完成
+
 # log
 2022-12-01
 - 以main分支(kxx)作为初始内容
