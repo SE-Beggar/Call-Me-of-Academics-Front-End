@@ -8,7 +8,9 @@ export default new Vuex.Store({
     islogin:false,
     username:'',
     email:'',
-    paperid:0
+    paperid:0,
+    searchcontent:'',
+    authorID:0
   },
   getters: {
   },
