@@ -133,6 +133,7 @@
 同时在create中给recommendAuthors赋初始值authors1(recommendPapers类似)
 然后根据点击导航栏给recommendAuthors、recommendPapers赋值（无需交互，已完成），展示的是recommendAuthors、recommendPapers中的内容
 */
+import qs from "qs";
 export default {
     data() {
         return {
@@ -403,17 +404,17 @@ export default {
     },
     methods: {
         search() {
+            this.$store.state.searchcontent=this.input
             if (this.select == 2) {
-                //搜学者 关键词this.input
-                this.$message.success("搜学者");
+                this.$router.push('/searchAuthor');
             }
             else {
-                //搜论文 关键词this.input
-                this.$message.success("搜论文");
+                this.$router.push('/searchPaper');
             }
         },
         toAdvanced() {
             //前往高级检索页面
+            this.$router.push('/advancedsearch');
         },
         to1() {
             this.menuIndex="1";

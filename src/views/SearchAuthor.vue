@@ -15,20 +15,20 @@
             </div>
         </div>
         <div id="searchResult">
-            <div v-for="i in authors.length" :key=i>
+            <div v-for="i in scholars.length" :key=i>
                 <el-card class="authorCard">
                     <div slot="header">
-                        <span>{{authors[i-1].name}}</span>
-                        <el-button class="authorButton" @click="toDetail(authors[i-1].authorID)">查看详情</el-button>
+                        <span>{{scholars[i-1].name}}</span>
+                        <el-button class="authorButton" @click="toDetail(scholars[i-1].id)">查看详情</el-button>
                     </div>
                     <div class="text">
-                        <div style="float:left">发表论文数：{{authors[i-1].hasPapers}}</div>
+                        <div style="float:left">发表论文数：{{scholars[i-1].papernum}}</div>
                     </div>
                     <div class="text">
-                        <div style="float:left">所属机构：{{authors[i-1].organization}}</div>
+                        <div style="float:left">所属机构：{{scholars[i-1].company}}</div>
                     </div>
                     <div class="text">
-                        <div style="float:left">论文总下载量：{{authors[i-1].downloadTimes}}</div>
+                        <div style="float:left">论文总下载量：{{scholars[i-1].downloadnum}}</div>
                     </div>
                 </el-card>
             </div>
@@ -93,76 +93,72 @@ export default {
         return {
             input: '',
             select: '',
-            authors: [
-                {
-                    "authorID": 11,
-                    "name": "学者1",
-                    "hasPapers": 251,
-                    "organization" :"数学出版社1",
-                    "downloadTimes": 1001//论文总下载量，根据数据库存的情况决定要不要此项
-                },
-                {
-                    "authorID": 12,
-                    "name": "学者2",
-                    "hasPapers": 251,
-                    "organization" :"数学出版社1",
-                    "downloadTimes": 1001//论文总下载量，根据数据库存的情况决定要不要此项
-                },
-                {
-                    "authorID": 13,
-                    "name": "学者3",
-                    "hasPapers": 251,
-                    "organization" :"数学出版社1",
-                    "downloadTimes": 1001//论文总下载量，根据数据库存的情况决定要不要此项
-                },
-                {
-                    "authorID": 14,
-                    "name": "学者4",
-                    "hasPapers": 251,
-                    "organization" :"数学出版社1",
-                    "downloadTimes": 1001//论文总下载量，根据数据库存的情况决定要不要此项
-                },
-                {
-                    "authorID": 14,
-                    "name": "学者5",
-                    "hasPapers": 251,
-                    "organization" :"数学出版社1",
-                    "downloadTimes": 1001//论文总下载量，根据数据库存的情况决定要不要此项
-                },
-                {
-                    "authorID": 14,
-                    "name": "学者6",
-                    "hasPapers": 251,
-                    "organization" :"数学出版社1",
-                    "downloadTimes": 1001//论文总下载量，根据数据库存的情况决定要不要此项
-                },{
-                    "authorID": 14,
-                    "name": "学者7",
-                    "hasPapers": 251,
-                    "organization" :"数学出版社1",
-                    "downloadTimes": 1001//论文总下载量，根据数据库存的情况决定要不要此项
-                },
-            ],
+            scholars:[{
+                id:1,
+                name:'名字',
+                company:'北航',
+                papernum:10,
+                downloadnum:20
+            },{
+                id:1,
+                name:'名字',
+                company:'北航',
+                papernum:10,
+                downloadnum:20
+            },{
+                id:1,
+                name:'名字',
+                company:'北航',
+                papernum:10,
+                downloadnum:20
+            },{
+                id:1,
+                name:'名字',
+                company:'北航',
+                papernum:10,
+                downloadnum:20
+            }]
         }
+    },
+    created(){
+        this.$axios({
+                method: 'post', 
+                url: '/api/user/searchscholar/',
+                    data: qs.stringify({
+                        scholar:this.$store.state.searchcontent
+                    })
+                })
+                .then(res => {
+                    switch (res.data.errno) {
+                    case 0:
+                        this.scholars=res.data.scholars;
+                        break;
+                    }
+                })
+                .catch(err => {
+                    console.log(err);  
+                })
     },
     methods: {
         search() {
             if (this.select == 2) {
                 //搜学者 关键词this.input
-                this.$message.success("搜学者");
+                this.$store.state.searchcontent=this.input;
+                this.$router.go(0)
             }
             else {
-                //搜论文 关键词this.input
-                this.$message.success("搜论文");
+                this.$store.state.searchcontent=this.input;
+                this.$router.push('/searchPaper')
             }
         }, 
         toAdvanced() {
             //前往高级检索页面
-        },
-        toDetail(authorID) {
-            //进入id为authorID的论文详情页面
-            this.$message.success(authorID);
-        },
+            this.$router.push('/advancedsearch')
+        },toDetail(id){
+            this.$store.state.authorID=id;
+            this.$router.push('/')
+            //学者详情页面路由
+        }
     }
 }
 </script>

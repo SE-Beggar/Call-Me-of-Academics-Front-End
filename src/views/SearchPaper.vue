@@ -11,7 +11,7 @@
                 </el-input>
             </div>
             <div id="advancedSearch">
-                <el-link>前往高级检索</el-link>
+                <el-link @click="toAdvanced">前往高级检索</el-link>
             </div>
         </div>
         <div id="filter">
@@ -57,17 +57,17 @@
             <el-table :data="papers" style="width: 100%">
                 <el-table-column type="index"> </el-table-column>
                 <el-table-column prop="title" label="论文标题"></el-table-column>
-                <el-table-column prop="firstAuthor" label="第一作者">
+                <el-table-column prop="author" label="第一作者">
                     <template slot-scope="scope">
-                        <el-link @click="authorDetail(scope.row.firstAuthorID)">
-                            {{scope.row.firstAuthor}}
+                        <el-link @click="authorDetail(scope.row.authorID)">
+                            {{scope.row.author}}
                         </el-link>
                     </template>
                 </el-table-column>
-                <el-table-column prop="organization" label="所属机构"></el-table-column>
-                <el-table-column prop="date" label="发表时间" sortable></el-table-column>
-                <el-table-column prop="downloadTimes" label="下载次数" sortable></el-table-column>
-                <el-table-column prop="referTimes" label="被引次数" sortable></el-table-column>
+                <el-table-column prop="publisher" label="所属机构"></el-table-column>
+                <el-table-column prop="time" label="发表时间" sortable></el-table-column>
+                <el-table-column prop="downloadnum" label="下载次数" sortable></el-table-column>
+                <el-table-column prop="quotenum" label="被引次数" sortable></el-table-column>
                 <el-table-column prop="id" label="操作">
                     <template slot-scope="scope">
                         <el-button type="primary" @click="paperDetail(scope.row.id)">查看详情</el-button>
@@ -139,6 +139,7 @@
 目前设置三个筛选项：学科subjectSelected、类型typeSelected、发表时间yearSelected
 各个筛选项内取并集，然后三个筛选项之间取交集得到筛选后结果（若某一筛选项为空表示该筛选项全选，各筛选项默认为空）
 */
+import qs from "qs";
 export default {
     data() {
         return {
@@ -169,46 +170,71 @@ export default {
             yearSelected:[],
             papers: [
                 {
-                    "id": 18,//论文在数据库的id，而非在列表中的id
-                    "title": "没头发",
-                    "firstAuthorID": 20,
-                    "firstAuthor": "谭火彬",
-                    "date": "2020.1.1",
-                    "organization": "北京出版社",
-                    "downloadTimes": 36,
-                    "referTimes": 19,
+                    "id":20,//论文在数据库的id，而非在列表中的id
+                    "title": "讨口子",
+                    "author": "潘海霞",
+                    "authorID": 20,
+                    "time": "2020.1.2",
+                    "publisher": "上海出版社",
+                    "downloadnum":0,
+                    "quotenum":10
                 },
                 {
                     "id": 30,//论文在数据库的id，而非在列表中的id
                     "title": "讨口子",
-                    "firstAuthorID": 20,
-                    "firstAuthor": "潘海霞",
-                    "date": "2020.1.2",
-                    "organization": "上海出版社",
-                    "downloadTimes": 109,
-                    "referTimes": 93,
+                    "author": "潘海霞",
+                    "authorID": 20,
+                    "time": "2020.1.2",
+                    "publisher": "上海出版社",
+                    "downloadnum":0,
+                    "quotenum":10
                 }
             ],
         }
     },
+    created(){
+        this.$axios({
+                method: 'post', 
+                url: '/api/user/searchpaper/',
+                    data: qs.stringify({
+                        title:this.$store.state.searchcontent
+                    })
+                })
+                .then(res => {
+                    switch (res.data.errno) {
+                    case 0:
+                        this.papers=res.data.papers;
+                        break;
+                    }
+                })
+                .catch(err => {
+                    console.log(err);  
+                })
+    },
     methods: {
         search() {
             if (this.select == 2) {
-                //搜学者 关键词this.input
-                this.$message.success("搜学者");
+                this.$store.state.searchcontent=this.input;
+                this.$router.push('/searchAuthor')
             }
             else {
-                //搜论文 关键词this.input
-                this.$message.success("搜论文");
+                this.$store.state.searchcontent=this.input;
+                this.$router.go(0)
             }
         },
         authorDetail(authorID) {
-            //进入id为authorID的论文详情页面
+            this.$store.state.authorID=authorID;
+            this.$router.push('/')
+            //学者详情页面路由未写..
         },
         paperDetail(paperID) {
             //进入id为paperID的论文详情页面
-            this.$message.success(paperID);
+            this.$store.state.paperid=paperID;
             this.$router.push('/Paperdetail');
+        },
+        toAdvanced() {
+            //前往高级检索页面
+            this.$router.push('/advancedsearch')
         },
         selectInResult() {
             //刷新页面，根据this.typeSelected，this.subjectSelected和this.yearSelected返回筛选结果后的paper

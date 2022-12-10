@@ -10,7 +10,7 @@
             <p>{{user.username}}</p>
           </div>
           <div class="intro">
-            <p><b>个人简介：</b>{{user.profile}}</p>
+            <p><b>个人简介：</b>{{user.description}}</p>
           </div>
         </div>
       </div>
@@ -21,26 +21,25 @@
           <el-tab-pane label="个人信息" name="info">
             <p class="info_entry"><b>用户名：</b>{{user.username}}</p>
             <p class="info_entry"><b>邮箱：</b>{{user.email}}</p>
-            <p class="info_entry"><b>身份：</b>{{user.identity}}</p>
           </el-tab-pane>
           <el-tab-pane label="信息修改" name="edit">
             <el-form class="info_edit">
               <el-form-item label="用户名">
-                <el-input class="infoInput" v-model="form.username"></el-input>
+                <el-input class="infoInput" v-model="user.username"></el-input>
               </el-form-item>
               <el-form-item label="个人简介">
-                <el-input type="textarea" class="infoInput" v-model="form.profile"></el-input>
+                <el-input type="textarea" class="infoInput" v-model="user.description"></el-input>
               </el-form-item>
               <el-form-item label="原密码">
-                <el-input type="password" class="infoInput" v-model="form.password0"></el-input>
+                <el-input type="password" class="infoInput" v-model="user.password" :disabled="true"></el-input>
               </el-form-item>
               <el-form-item label="新密码">
-                <el-input type="password" class="infoInput" v-model="form.password1"></el-input>
+                <el-input type="password" class="infoInput" v-model="password1"></el-input>
               </el-form-item>
               <el-form-item label="确认密码">
-                <el-input type="password" class="infoInput" v-model="form.password2"></el-input>
+                <el-input type="password" class="infoInput" v-model="password2"></el-input>
               </el-form-item>
-              <el-button class="el_btn" @click="">保存修改</el-button>
+              <el-button class="el_btn" @click="save">保存修改</el-button>
             </el-form>
           </el-tab-pane>
         </el-tabs>
@@ -135,17 +134,11 @@
         user:{
           username:"Lorem ipsum",
           email:"lorem@ipsum.com",
-          profile:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, tenetur asperiores. Laborum sint id iste deleniti, aut labore placeat ipsam, accusantium magni tempore dolores numquam repudiandae aliquam quam aperiam cumque.",
+          description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, tenetur asperiores. Laborum sint id iste deleniti, aut labore placeat ipsam, accusantium magni tempore dolores numquam repudiandae aliquam quam aperiam cumque.",
           password:"password",
-          identity:"普通用户"
         },
-        form:{
-          username:"",
-          profile:"",
-          password0:"",
-          password1:"",
-          password2:""
-        },
+        password1:"",
+        password2:"",
         panel:"info"
       }
     },
@@ -154,8 +147,48 @@
     },
     methods:{
       fillDefaultForm(){
-        this.form.username=this.user.username
-        this.form.profile=this.user.profile
+        this.$axios({
+                    method: 'get',
+                    url: '/api/user/userspace/',
+                    params: {
+                    email:this.$store.state.email
+                    }
+                    })
+                    .then(res => {          
+                    switch (res.data.errno) {
+                        case 0:
+                          this.user=res.data.user;
+                        break;
+                    }
+                    })
+                    .catch(err => {
+                    console.log(err);         
+                    })
+      },
+      save(){
+        if(this.password1==this.password2&&this.password1!=''){
+          this.user.password=this.password1;
+          this.password1='',
+          this.password2=''
+        }
+        this.$axios({
+                    method: 'post', 
+                    url: '/api/user/userspace/',
+                    data: qs.stringify({
+                      user:this.user
+                    })
+                })
+                .then(res => {
+                    switch (res.data.errno) {
+                    case 0:
+                        this.$message.success("更改成功");
+                        break;
+                    }
+                })
+                .catch(err => {
+                    console.log(err);  
+                })
+                this.$router.go(0);
       }
     }
   }
