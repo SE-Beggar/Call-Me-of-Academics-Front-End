@@ -94,9 +94,6 @@
           size="small"
         ></el-button>
       </div>
-
-      <div>{{ queries }}</div>
-      <div>{{ timerange }}</div>
     </div>
   </div>
 </template>
@@ -115,7 +112,7 @@ export default {
         { logic: 0, entry: 2, input: "" },
         { logic: 0, entry: 3, input: "" },
       ],
-      options: ["篇名", "关键词", "作者", "第一作者"],
+      options: ["篇名", "关键词", "作者", "第一作者","所属期刊"],
       timerange: "",
       pickerOptions: {
         shortcuts: [

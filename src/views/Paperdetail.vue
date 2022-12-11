@@ -86,6 +86,7 @@
                     type:"类型1",
                     autors:["xxx1","xxx2"],
                     time:"2001",
+                    href:"//www.baidu.com",
                     field:"领域",
                     publisher:"这是出版社",
                     references:[{title:"参考文献1",autor:"第一作者",publisher:"出版社1",time:"202001"}],
@@ -122,7 +123,8 @@
 
             },
             preview(){
-
+                let hre="https:"+this.paper.href;
+                window.open(hre, '_blank');
             }
         }
     }

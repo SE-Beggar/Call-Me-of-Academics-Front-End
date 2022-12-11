@@ -54,7 +54,7 @@
             <el-button @click="selectInResult" id="selectButton">结果中筛选</el-button>
         </div>
         <div id="searchResult">
-            <el-table :data="papers" style="width: 100%">
+            <el-table :data="papers.slice((currentPage-1)*pagesize,currentPage*pagesize)" style="width: 100%" :current-page.sync="currentPage">
                 <el-table-column type="index"> </el-table-column>
                 <el-table-column prop="title" label="论文标题"></el-table-column>
                 <el-table-column prop="author" label="第一作者">
@@ -74,6 +74,14 @@
                     </template>
                 </el-table-column>
             </el-table>
+            <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :page-sizes="[10, 15, 20]"
+            :page-size="pagesize"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total">
+    </el-pagination>
         </div>
     </div>
 </template>
@@ -145,6 +153,8 @@ export default {
         return {
             input: '',
             select: '',
+            currentPage:1,
+            pagesize:10,
             types:[
                 "期刊",
                 "会议",
@@ -171,7 +181,7 @@ export default {
             papers: [
                 {
                     "id":20,//论文在数据库的id，而非在列表中的id
-                    "title": "讨口子",
+                    "title": "讨口子1",
                     "author": "潘海霞",
                     "authorID": 20,
                     "time": "2020.1.2",
@@ -181,7 +191,7 @@ export default {
                 },
                 {
                     "id": 30,//论文在数据库的id，而非在列表中的id
-                    "title": "讨口子",
+                    "title": "讨口子2",
                     "author": "潘海霞",
                     "authorID": 20,
                     "time": "2020.1.2",
@@ -242,6 +252,12 @@ export default {
         }
     },
     methods: {
+        handleSizeChange(val) {
+            this.pagesize=val;
+        },
+        handleCurrentChange(val) {
+            this.currentPage = val;
+        },
         search() {
             if (this.select == 2) {
                 this.$store.state.searchcontent=this.input;
