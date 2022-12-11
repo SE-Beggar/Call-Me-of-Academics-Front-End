@@ -32,7 +32,7 @@ const routes = [
   },{
     path: '/main',
     name: 'Main',
-    component: () => import('../views/Main.vue')
+    component: () => import('../views/Main1.vue')
   },{
     path: '/searchPaper',
     name: 'SearchPaper',
