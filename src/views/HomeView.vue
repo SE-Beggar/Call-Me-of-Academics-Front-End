@@ -15,22 +15,7 @@
     <a href="/testpage">样式测试</a>
   </div> -->
   <div>
-    <div id="top_banner">
-      <div class="top_left">
-        <img src="../assets/image/characters/begger_top.png" style="float:left;height:72px;">
-      </div>
-      <!--如果读取到登录信息就显示登录后的情况-->
-      <div class="top_right">
-        <div v-if="this.$store.state.islogin===false">
-        <div class="div_btn1" style="float:left" @click="gotoLogin">登录</div>
-        <div class="div_btn1" style="float:left" @click="gotoRegister">注册</div>
-        </div>
-        <div v-if="this.$store.state.islogin===true" class="head_box" @click="gotoProfile">
-          <img src="../assets/image/heads/1.png">
-        </div>
-      </div>
-    </div>
-
+    <TopBanner/>
     <div style="height:100px;"></div>
     <div>
         <div class="text_head">
@@ -138,13 +123,13 @@
 
 <script>
 // // @ is an alias to /src
-// import HelloWorld from '@/components/HelloWorld.vue'
+import TopBanner from '@/components/TopBanner.vue'
 
 export default {
   name: 'HomeView',
-  // components: {
-  //   HelloWorld
-  // }
+  components: {
+    TopBanner
+  },
   methods: {
     gotoLogin(){
         this.$router.push("/login")
@@ -159,29 +144,6 @@ export default {
 }
 </script>
 <style scoped>
-#top_banner {
-  width: 100%;
-  height: 72px;
-  position: fixed;
-  backdrop-filter: blur(20px);
-  background-color: rgba(255, 255, 255, 0.5);
-  z-index: 1;
-  box-shadow: 10rpx 10rpx 10rpx rgb(0 0 0 / 18%);
-  overflow: hidden;
-}
-
-.top_left {
-  float:left;
-}
-.top_left:hover {
-  cursor: pointer;
-}
-.top_right {
-  float:right;
-  margin-right:40px;
-  font-size: 30px;
-}
-
 .div_btn1 {
   color:black;
   font-size: 20px;
