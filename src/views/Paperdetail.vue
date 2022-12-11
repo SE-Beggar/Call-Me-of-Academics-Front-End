@@ -95,7 +95,7 @@
         created(){
             this.$axios({
                     method: 'get',
-                    url: '/api/user/register/',
+                    url: '/api/paper/paperdetails/',
                     params: {
                     paperid: this.$store.state.paperid
                     }

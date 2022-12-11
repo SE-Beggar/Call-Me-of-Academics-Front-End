@@ -409,11 +409,12 @@ export default {
                 this.$router.push('/searchAuthor');
             }
             else {
+                this.$store.state.type=1;
                 this.$router.push('/searchPaper');
             }
         },
         toAdvanced() {
-            //前往高级检索页面
+            tis.$store.state.type=2;
             this.$router.push('/advancedsearch');
         },
         to1() {

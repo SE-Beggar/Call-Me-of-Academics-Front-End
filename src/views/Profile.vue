@@ -42,6 +42,25 @@
               <el-button class="el_btn" @click="save">保存修改</el-button>
             </el-form>
           </el-tab-pane>
+          <el-tab-pane label="管理认证" name="admin" v-if="isadmin==1">
+            <el-table :data="lists" style="width: 100%">
+                <el-table-column type="index"> </el-table-column>
+                <el-table-column prop="username" label="用户名"></el-table-column>
+                <el-table-column prop="scholarname" label="学者名">
+                    <template slot-scope="scope">
+                        <el-link @click="authorDetail(scope.row.scholarid)">
+                            {{scope.row.scholarname}}
+                        </el-link>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="id" label="操作">
+                    <template slot-scope="scope">
+                        <el-button type="primary" @click="accept(scope.row.id)">同意</el-button>
+                        <el-button type="danger" @click="refuse(scope.row.id)">拒绝</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+          </el-tab-pane>
         </el-tabs>
       </div>
     </div>
@@ -137,13 +156,38 @@
           description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, tenetur asperiores. Laborum sint id iste deleniti, aut labore placeat ipsam, accusantium magni tempore dolores numquam repudiandae aliquam quam aperiam cumque.",
           password:"password",
         },
+        lists:[{
+          id:1,
+          userid:1,
+          scholarid:1,
+          username:"用户名",
+          scholarname:"学者名"
+        }
+        ],
         password1:"",
         password2:"",
-        panel:"info"
+        panel:"info",
+        isadmin:1,
       }
     },
     created(){
       this.fillDefaultForm()
+      if(this.isadmin==1){
+        this.$axios({
+                    method: 'get',
+                    url: '/api/admin/identify/'
+                    })
+                    .then(res => {          
+                    switch (res.data.errno) {
+                        case 0:
+                          this.lists=res.data.lists;
+                        break;
+                    }
+                    })
+                    .catch(err => {
+                    console.log(err);         
+                    })        
+      }
     },
     methods:{
       fillDefaultForm(){
@@ -158,6 +202,7 @@
                     switch (res.data.errno) {
                         case 0:
                           this.user=res.data.user;
+                          this.isadmin=res.data.isadmin;
                         break;
                     }
                     })
@@ -189,6 +234,51 @@
                     console.log(err);  
                 })
                 this.$router.go(0);
+      },
+      accept(id){
+        this.$axios({
+                    method: 'post', 
+                    url: '/api/admin/identify/',
+                    data: qs.stringify({
+                      listid:id,
+                      op:0
+                    })
+                })
+                .then(res => {
+                    switch (res.data.errno) {
+                    case 0:
+                        this.$message.success("操作成功");
+                        break;
+                    case 1:
+                        this.$message.error("该学者已被他人认证");                       
+                        break;
+                    }
+                })
+                .catch(err => {
+                    console.log(err);  
+                })
+                this.$router.go(0);       
+      },
+      refuse(id){
+        this.$axios({
+                    method: 'post', 
+                    url: '/api/admin/identify/',
+                    data: qs.stringify({
+                      listid:id,
+                      op:1
+                    })
+                })
+                .then(res => {
+                    switch (res.data.errno) {
+                    case 0:
+                        this.$message.success("操作成功");
+                        break;
+                    }
+                })
+                .catch(err => {
+                    console.log(err);  
+                })
+                this.$router.go(0);       
       }
     }
   }

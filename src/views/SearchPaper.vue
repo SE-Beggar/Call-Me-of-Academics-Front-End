@@ -193,11 +193,15 @@ export default {
         }
     },
     created(){
-        this.$axios({
+        if(this.$store.state.type==1){
+            this.$axios({
                 method: 'post', 
-                url: '/api/user/searchpaper/',
+                url: '/api/paper/searchpaper/',
                     data: qs.stringify({
-                        title:this.$store.state.searchcontent
+                        title:this.$store.state.searchcontent,
+                        typeSelected:this.typeSelected,
+                        subjectSelected:this.subjectSelected,
+                        yearSelected:this.yearSelected
                     })
                 })
                 .then(res => {
@@ -210,6 +214,32 @@ export default {
                 .catch(err => {
                     console.log(err);  
                 })
+        }
+        else if(this.$store.state.type==2){
+            this.$axios({
+                method: 'post', 
+                url: '/api/paper/advancesearch/',
+                    data: qs.stringify({
+                        advancecontent:this.$store.state.advancecontent,
+                        typeSelected:this.typeSelected,
+                        subjectSelected:this.subjectSelected,
+                        yearSelected:this.yearSelected
+                    })
+                })
+                .then(res => {
+                    switch (res.data.errno) {
+                    case 0:
+                        this.papers=res.data.papers;
+                        break;
+                    }
+                })
+                .catch(err => {
+                    console.log(err);  
+                })          
+        }
+        else{
+            this.$message.error("不对劲");
+        }
     },
     methods: {
         search() {
@@ -218,6 +248,7 @@ export default {
                 this.$router.push('/searchAuthor')
             }
             else {
+                this.$store.state.type=1;
                 this.$store.state.searchcontent=this.input;
                 this.$router.go(0)
             }
@@ -237,7 +268,7 @@ export default {
             this.$router.push('/advancedsearch')
         },
         selectInResult() {
-            //刷新页面，根据this.typeSelected，this.subjectSelected和this.yearSelected返回筛选结果后的paper
+            this.$router.go(0);
         }
     }
 }

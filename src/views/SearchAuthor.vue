@@ -30,6 +30,9 @@
                     <div class="text">
                         <div style="float:left">论文总下载量：{{scholars[i-1].downloadnum}}</div>
                     </div>
+                    <div v-if="scholars[i-1].isidentify==0">
+                        <el-button type="primary" @click="identify(scholars[i-1].id)">认证该学者</el-button>
+                    </div>
                 </el-card>
             </div>
         </div>
@@ -88,6 +91,7 @@
 </style>
 
 <script>
+import qs from "qs";
 export default {
     data() {
         return {
@@ -96,24 +100,28 @@ export default {
             scholars:[{
                 id:1,
                 name:'名字',
+                isidentify:1,
+                company:'北航',
+                papernum:10,
+                downloadnum:20,
+            },{
+                id:1,
+                name:'名字',
+                isidentify:0,
                 company:'北航',
                 papernum:10,
                 downloadnum:20
             },{
                 id:1,
                 name:'名字',
+                isidentify:0,
                 company:'北航',
                 papernum:10,
                 downloadnum:20
             },{
                 id:1,
                 name:'名字',
-                company:'北航',
-                papernum:10,
-                downloadnum:20
-            },{
-                id:1,
-                name:'名字',
+                isidentify:1,
                 company:'北航',
                 papernum:10,
                 downloadnum:20
@@ -123,7 +131,7 @@ export default {
     created(){
         this.$axios({
                 method: 'post', 
-                url: '/api/user/searchscholar/',
+                url: '/api/paper/searchscholar/',
                     data: qs.stringify({
                         scholar:this.$store.state.searchcontent
                     })
@@ -147,6 +155,7 @@ export default {
                 this.$router.go(0)
             }
             else {
+                this.$store.state.type=1;
                 this.$store.state.searchcontent=this.input;
                 this.$router.push('/searchPaper')
             }
@@ -154,10 +163,31 @@ export default {
         toAdvanced() {
             //前往高级检索页面
             this.$router.push('/advancedsearch')
-        },toDetail(id){
+        },
+        toDetail(id){
             this.$store.state.authorID=id;
             this.$router.push('/')
             //学者详情页面路由
+        },
+        identify(id){
+            this.$axios({
+                method: 'post', 
+                url: '/api/user/identify/',
+                    data: qs.stringify({
+                        scholarid:id,
+                        email:this.$store.state.email
+                    })
+                })
+                .then(res => {
+                    switch (res.data.errno) {
+                    case 0:
+                        this.$message.success("操作成功,等待管理员核验");
+                        break;
+                    }
+                })
+                .catch(err => {
+                    console.log(err);  
+                })            
         }
     }
 }

@@ -93,10 +93,10 @@
                         this.$router.push('/login');
                         }, 1000);
                         break;
-                    case 2001:
+                    case 1001:
                         this.$message.error("该邮箱已注册!");
                         break;
-                    case 2002:
+                    case 1002:
                         this.$message.error("验证码错误");
                         break;
                     }
