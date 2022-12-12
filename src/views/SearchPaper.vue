@@ -54,7 +54,7 @@
             <el-button @click="selectInResult" id="selectButton">结果中筛选</el-button>
         </div>
         <div id="searchResult">
-            <el-table :data="papers" style="width: 100%">
+            <el-table :data="papers.slice((currentPage-1)*pagesize,currentPage*pagesize)" style="width: 100%" :current-page.sync="currentPage">
                 <el-table-column type="index"> </el-table-column>
                 <el-table-column prop="title" label="论文标题"></el-table-column>
                 <el-table-column prop="author" label="第一作者">
@@ -65,15 +65,23 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="publisher" label="所属机构"></el-table-column>
-                <el-table-column prop="time" label="发表时间" sortable></el-table-column>
+                <el-table-column prop="year" label="发表时间" sortable></el-table-column>
                 <el-table-column prop="downloadnum" label="下载次数" sortable></el-table-column>
-                <el-table-column prop="quotenum" label="被引次数" sortable></el-table-column>
+                <el-table-column prop="n_citation" label="被引次数" sortable></el-table-column>
                 <el-table-column prop="id" label="操作">
                     <template slot-scope="scope">
                         <el-button type="primary" @click="paperDetail(scope.row.id)">查看详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
+            <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :page-sizes="[10, 15, 20]"
+            :page-size="pagesize"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total">
+    </el-pagination>
         </div>
     </div>
 </template>
@@ -145,6 +153,8 @@ export default {
         return {
             input: '',
             select: '',
+            currentPage:1,
+            pagesize:10,
             types:[
                 "期刊",
                 "会议",
@@ -171,33 +181,37 @@ export default {
             papers: [
                 {
                     "id":20,//论文在数据库的id，而非在列表中的id
-                    "title": "讨口子",
+                    "title": "讨口子1",
                     "author": "潘海霞",
                     "authorID": 20,
-                    "time": "2020.1.2",
+                    "year": "2020",
                     "publisher": "上海出版社",
                     "downloadnum":0,
-                    "quotenum":10
+                    "n_citation":10
                 },
                 {
                     "id": 30,//论文在数据库的id，而非在列表中的id
-                    "title": "讨口子",
+                    "title": "讨口子2",
                     "author": "潘海霞",
                     "authorID": 20,
-                    "time": "2020.1.2",
+                    "year": "2020",
                     "publisher": "上海出版社",
                     "downloadnum":0,
-                    "quotenum":10
+                    "n_citation":10
                 }
             ],
         }
     },
     created(){
-        this.$axios({
+        if(this.$store.state.type==1){
+            this.$axios({
                 method: 'post', 
-                url: '/api/user/searchpaper/',
+                url: '/api/paper/searchpaper/',
                     data: qs.stringify({
-                        title:this.$store.state.searchcontent
+                        title:this.$store.state.searchcontent,
+                        typeSelected:this.typeSelected,
+                        subjectSelected:this.subjectSelected,
+                        yearSelected:this.yearSelected
                     })
                 })
                 .then(res => {
@@ -210,14 +224,47 @@ export default {
                 .catch(err => {
                     console.log(err);  
                 })
+        }
+        else if(this.$store.state.type==2){
+            this.$axios({
+                method: 'post', 
+                url: '/api/paper/advancesearch/',
+                    data: qs.stringify({
+                        advancecontent:this.$store.state.advancecontent,
+                        typeSelected:this.typeSelected,
+                        subjectSelected:this.subjectSelected,
+                        yearSelected:this.yearSelected
+                    })
+                })
+                .then(res => {
+                    switch (res.data.errno) {
+                    case 0:
+                        this.papers=res.data.papers;
+                        break;
+                    }
+                })
+                .catch(err => {
+                    console.log(err);  
+                })          
+        }
+        else{
+            this.$message.error("不对劲");
+        }
     },
     methods: {
+        handleSizeChange(val) {
+            this.pagesize=val;
+        },
+        handleCurrentChange(val) {
+            this.currentPage = val;
+        },
         search() {
             if (this.select == 2) {
                 this.$store.state.searchcontent=this.input;
                 this.$router.push('/searchAuthor')
             }
             else {
+                this.$store.state.type=1;
                 this.$store.state.searchcontent=this.input;
                 this.$router.go(0)
             }
@@ -237,7 +284,7 @@ export default {
             this.$router.push('/advancedsearch')
         },
         selectInResult() {
-            //刷新页面，根据this.typeSelected，this.subjectSelected和this.yearSelected返回筛选结果后的paper
+            this.$router.go(0);
         }
     }
 }

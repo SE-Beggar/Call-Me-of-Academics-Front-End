@@ -10,7 +10,10 @@ export default new Vuex.Store({
     email:'',
     paperid:0,
     searchcontent:'',
-    authorID:0
+    authorID:0,
+    advancecontent:[{logic:0, entry:0, input:""}],
+    type:0,
+    timerange:""
   },
   getters: {
   },

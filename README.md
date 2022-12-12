@@ -44,3 +44,5 @@
   - 将Main.vue改为Main1.vue
 - 合并zel分支
   - 添加Journal.vue
+- 合并main分支
+- 合并rzq分支

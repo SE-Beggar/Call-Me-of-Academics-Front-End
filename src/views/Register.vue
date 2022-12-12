@@ -67,15 +67,15 @@ export default {
       email: "",
       code: "",
       password1: "",
-      password2: "",
-    };
+      password2: ""
+    }
   },
   methods: {
     ret() {
       this.$router.back();
     },
     gotologin() {
-      this.$router.push("/login");
+      this.$router.push('/login');
     },
     send() {
       if (this.email == "") {
@@ -83,13 +83,13 @@ export default {
         return;
       }
       this.$axios({
-        method: "get",
-        url: "/api/user/register/",
+        method: 'get',
+        url: '/api/user/register/',
         params: {
-          email: this.email,
-        },
+          email: this.email
+        }
       })
-        .then((res) => {
+        .then(res => {
           switch (res.data.errno) {
             case 0:
               this.$message.success("发送成功");
@@ -102,9 +102,9 @@ export default {
               break;
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
-        });
+        })
     },
     Register() {
       if (email == "" || username == "" || password1 == "" || password2 == "") {
@@ -116,37 +116,37 @@ export default {
         return;
       }
       this.$axios({
-        method: "post",
-        url: "/api/user/register/",
+        method: 'post',
+        url: '/api/user/register/',
         data: qs.stringify({
           username: this.username,
           email: this.email,
           code: this.code,
-          password: this.password1,
-        }),
+          password: this.password1
+        })
       })
-        .then((res) => {
+        .then(res => {
           switch (res.data.errno) {
             case 0:
               this.$message.success("注册成功");
               setTimeout(() => {
-                this.$router.push("/login");
+                this.$router.push('/login');
               }, 1000);
               break;
-            case 2001:
+            case 1001:
               this.$message.error("该邮箱已注册!");
               break;
-            case 2002:
+            case 1002:
               this.$message.error("验证码错误");
               break;
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
-        });
-    },
-  },
-};
+        })
+    }
+  }
+}
 </script>
 <style scoped>
 .form_box {

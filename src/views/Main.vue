@@ -6,12 +6,13 @@
                     <el-select v-model="select" slot="prepend" placeholder="论文检索">
                         <el-option label="论文检索" value="1"></el-option>
                         <el-option label="学者检索" value="2"></el-option>
+                        <el-option label="期刊检索" value="3"></el-option>
                     </el-select>
                     <el-button slot="append" icon="el-icon-search" v-on:click="search">搜索</el-button>
                 </el-input>
             </div>
             <div id="advancedSearch">
-                <el-link @click="toAdvanced">前往高级检索</el-link>
+                <el-link @click="toad">前往高级检索</el-link>
             </div>
         </div>
         <div id="recommend">
@@ -409,11 +410,12 @@ export default {
                 this.$router.push('/searchAuthor');
             }
             else {
+                this.$store.state.type=1;
                 this.$router.push('/searchPaper');
             }
         },
-        toAdvanced() {
-            //前往高级检索页面
+        toad() {
+            this.$store.state.type=2;
             this.$router.push('/advancedsearch');
         },
         to1() {

@@ -3,7 +3,7 @@
     <el-button class="ret" type="primary" @click="ret">返回</el-button>
     <div class="paper">
         <h1>{{paper.title}}</h1>
-        <h4 class="time">时间:{{paper.time}}</h4>
+        <h4 class="year">时间:{{paper.year}}</h4>
         <div class="content">
             <h2>摘要</h2>
             <a>{{paper.abstract}}</a>
@@ -23,9 +23,9 @@
             <a>
                 {{paper.type}}
             </a>
-            <h2>领域</h2>
+            <h2>语言</h2>
             <a>
-                {{paper.field}}
+                {{paper.lang}}
             </a>
         </div>
         <el-button type="primary" @click="download">下载</el-button>
@@ -50,7 +50,7 @@
                     width="180">
                 </el-table-column>
                 <el-table-column
-                    prop="time"
+                    prop="year"
                     label="时间">
                 </el-table-column>
                 </el-table>
@@ -66,7 +66,7 @@
     div.content{
         width:50%; 
     }
-    h4.time{
+    h4.year{
         position:relative;
         left:200px;
     }
@@ -83,19 +83,20 @@
                     title:"这是论文标题",
                     abstract:"这是摘要",
                     keywords:["关键词1","关键词2"],
-                    type:"类型1",
+                    doc_type:"类型1",
                     autors:["xxx1","xxx2"],
-                    time:"2001",
-                    field:"领域",
+                    year:"2001",
+                    pdf:"//www.baidu.com",
+                    lang:"en",
                     publisher:"这是出版社",
-                    references:[{title:"参考文献1",autor:"第一作者",publisher:"出版社1",time:"202001"}],
+                    references:[{title:"参考文献1",autor:"第一作者",publisher:"出版社1",year:"202001"}],
                 }
             }
         },
         created(){
             this.$axios({
                     method: 'get',
-                    url: '/api/user/register/',
+                    url: '/api/paper/paperdetails/',
                     params: {
                     paperid: this.$store.state.paperid
                     }
@@ -118,11 +119,24 @@
             ret(){
                 this.$router.back();
             },
-            download(){
-
+            download(){       
+        let url="https:"+this.paper.pdf
+        //let url = "https://dl.winmoes.com/wp-content/uploads/2022/08/4448412e3b83cf8.png?imageMogr2/crop/626x"
+        const downloadRes = async () => {
+        let response = await fetch(url); 
+        let blob = await response.blob();  
+        let objectUrl = window.URL.createObjectURL(blob);
+        let a = document.createElement('a');
+        a.href = objectUrl;
+        a.download = "文献";
+        a.click()
+        a.remove(); 
+       }
+      downloadRes();
             },
             preview(){
-
+                let hre="https:"+this.paper.pdf;
+                window.open(hre, '_blank');
             }
         }
     }
