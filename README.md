@@ -49,3 +49,7 @@
   - 添加AuthorAnalysis.vue组件
   - 修改Scholar.vue页面
   - 修改`package-lock.json`，**注意：在此处修改后需要先执行`npm install`才能正常运行项目**
+
+2022-12-13
+- 重新设计logo
+- 更新下边栏二维码

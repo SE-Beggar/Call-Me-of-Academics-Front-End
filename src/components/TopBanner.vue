@@ -1,7 +1,7 @@
 <template>
   <div id="top_banner">
     <div class="top_left" @click="gotoMain">
-      <img src="../assets/image/characters/begger_top.png" style="float:left;height:72px;">
+      <img src="../assets/image/style_img/header.png" style="float:left;height:72px;">
     </div>
     <div class="top_right">
       <div v-if="this.$store.state.islogin===false">
@@ -49,6 +49,7 @@ export default {
 
 .top_left {
   float:left;
+  margin-left: 40px;
 }
 .top_left:hover {
   cursor: pointer;
