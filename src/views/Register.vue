@@ -1,5 +1,6 @@
 <template>
   <div>
+    <TopBanner/>
     <div class="form_box">
       <h1 class="box_title">注册</h1>
       <el-form ref="form">
@@ -38,7 +39,6 @@
         </el-form-item>
       </el-form>
     </div>
-
     <!-- <form class="form2">
       <el-button type="primary" class="retl" @click="gotologin">返回</el-button>
       <br />
@@ -60,92 +60,95 @@
 </template>
 <script>
 import qs from "qs";
+import TopBanner from '@/components/TopBanner.vue'
+import BottomBanner from '@/components/BottomBanner.vue'
 export default {
-  data() {
-    return {
-      username: "",
-      email: "",
-      code: "",
-      password1: "",
-      password2: ""
-    }
-  },
-  methods: {
-    ret() {
-      this.$router.back();
+    components: { TopBanner, BottomBanner },
+    data() {
+        return {
+            username: "",
+            email: "",
+            code: "",
+            password1: "",
+            password2: ""
+        };
     },
-    gotologin() {
-      this.$router.push('/login');
-    },
-    send() {
-      if (this.email == "") {
-        this.$message.error("邮箱不能为空");
-        return;
-      }
-      this.$axios({
-        method: 'get',
-        url: '/api/user/register/',
-        params: {
-          email: this.email
+    methods: {
+        ret() {
+            this.$router.back();
+        },
+        gotologin() {
+            this.$router.push("/login");
+        },
+        send() {
+            if (this.email == "") {
+                this.$message.error("邮箱不能为空");
+                return;
+            }
+            this.$axios({
+                method: "get",
+                url: "/api/user/register/",
+                params: {
+                    email: this.email
+                }
+            })
+                .then(res => {
+                switch (res.data.errno) {
+                    case 0:
+                        this.$message.success("发送成功");
+                        break;
+                    case 2001:
+                        this.$message.error("该邮箱已注册!");
+                        break;
+                    case 2002:
+                        this.$message.error("请求方式错误!");
+                        break;
+                }
+            })
+                .catch(err => {
+                console.log(err);
+            });
+        },
+        Register() {
+            if (email == "" || username == "" || password1 == "" || password2 == "") {
+                this.$message.warning("请填写完整信息");
+                return;
+            }
+            if (password1 != password2) {
+                this.$message.warning("两次输入的密码应一致");
+                return;
+            }
+            this.$axios({
+                method: "post",
+                url: "/api/user/register/",
+                data: qs.stringify({
+                    username: this.username,
+                    email: this.email,
+                    code: this.code,
+                    password: this.password1
+                })
+            })
+                .then(res => {
+                switch (res.data.errno) {
+                    case 0:
+                        this.$message.success("注册成功");
+                        setTimeout(() => {
+                            this.$router.push("/login");
+                        }, 1000);
+                        break;
+                    case 1001:
+                        this.$message.error("该邮箱已注册!");
+                        break;
+                    case 1002:
+                        this.$message.error("验证码错误");
+                        break;
+                }
+            })
+                .catch(err => {
+                console.log(err);
+            });
         }
-      })
-        .then(res => {
-          switch (res.data.errno) {
-            case 0:
-              this.$message.success("发送成功");
-              break;
-            case 2001:
-              this.$message.error("该邮箱已注册!");
-              break;
-            case 2002:
-              this.$message.error("请求方式错误!");
-              break;
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        })
-    },
-    Register() {
-      if (email == "" || username == "" || password1 == "" || password2 == "") {
-        this.$message.warning("请填写完整信息");
-        return;
-      }
-      if (password1 != password2) {
-        this.$message.warning("两次输入的密码应一致");
-        return;
-      }
-      this.$axios({
-        method: 'post',
-        url: '/api/user/register/',
-        data: qs.stringify({
-          username: this.username,
-          email: this.email,
-          code: this.code,
-          password: this.password1
-        })
-      })
-        .then(res => {
-          switch (res.data.errno) {
-            case 0:
-              this.$message.success("注册成功");
-              setTimeout(() => {
-                this.$router.push('/login');
-              }, 1000);
-              break;
-            case 1001:
-              this.$message.error("该邮箱已注册!");
-              break;
-            case 1002:
-              this.$message.error("验证码错误");
-              break;
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        })
     }
-  }
 }
 </script>
 <style scoped>

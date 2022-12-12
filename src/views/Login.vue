@@ -1,5 +1,6 @@
 <template>
   <div>
+    <TopBanner/>
     <div class="form_box">
       <h1 class="box_title">登录</h1>
       <el-form ref="form">
@@ -48,65 +49,68 @@
 </template>
 <script>
 import qs from "qs";
+import TopBanner from '@/components/TopBanner.vue'
+import BottomBanner from '@/components/BottomBanner.vue'
 export default {
-  data() {
-    return {
-      email: "",
-      password: "",
-    };
-  },
-  created() {
-    if (this.$store.state.islogin) {
-      this.$message.success("您已经登录，将跳转到主页");
-      setTimeout(() => {
-        this.$router.push("/");
-      }, 1000);
-    }
-  },
-  methods: {
-    gotoRegister() {
-      this.$router.push("/register");
+    data() {
+        return {
+            email: "",
+            password: "",
+        };
     },
-    ret() {
-      this.$router.back();
-    },
-    login() {
-      if (email == "" || password == "") {
-        this.$message.warning("请填写完整信息");
-        return;
-      }
-      this.$axios({
-        method: "post",
-        url: "/api/user/login/",
-        data: qs.stringify({
-          email: this.email,
-          password: this.password,
-        }),
-      })
-        .then((res) => {
-          switch (res.data.errno) {
-            case 0:
-              this.$message.success("登录成功！");
-              this.$store.state.mailbox = res.data.email;
-              this.$store.state.username = res.data.username;
-              this.$store.state.islogin = true;
-              setTimeout(() => {
+    created() {
+        if (this.$store.state.islogin) {
+            this.$message.success("您已经登录，将跳转到主页");
+            setTimeout(() => {
                 this.$router.push("/");
-              }, 1000);
-              break;
-            case 1001:
-              this.$message.error("密码错误!");
-              break;
-            case 1002:
-              this.$message.error("用户不存在!");
-              break;
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+            }, 1000);
+        }
     },
-  },
+    methods: {
+        gotoRegister() {
+            this.$router.push("/register");
+        },
+        ret() {
+            this.$router.back();
+        },
+        login() {
+            if (email == "" || password == "") {
+                this.$message.warning("请填写完整信息");
+                return;
+            }
+            this.$axios({
+                method: "post",
+                url: "/api/user/login/",
+                data: qs.stringify({
+                    email: this.email,
+                    password: this.password,
+                }),
+            })
+                .then((res) => {
+                switch (res.data.errno) {
+                    case 0:
+                        this.$message.success("登录成功！");
+                        this.$store.state.mailbox = res.data.email;
+                        this.$store.state.username = res.data.username;
+                        this.$store.state.islogin = true;
+                        setTimeout(() => {
+                            this.$router.push("/");
+                        }, 1000);
+                        break;
+                    case 1001:
+                        this.$message.error("密码错误!");
+                        break;
+                    case 1002:
+                        this.$message.error("用户不存在!");
+                        break;
+                }
+            })
+                .catch((err) => {
+                console.log(err);
+            });
+        },
+    },
+    components: { TopBanner }
 };
 </script>
 <style scoped>

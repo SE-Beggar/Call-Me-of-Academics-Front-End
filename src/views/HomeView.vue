@@ -106,32 +106,20 @@
       </div>
     </div>
 
-    <div class="div_intro1" style="height:300px;display: block;">
-      <div class="info_img">
-        <p style="margin-bottom:20px;font-size:18px;">友情链接</p>
-        <img src="../assets/image/nbpl.png">
-      </div>
-      <div class="info_img">
-        <p style="margin-bottom:20px;font-size:18px;">关于我们</p>
-        <img src="../assets/image/about_us.png">
-      </div>
-      <div class="info_img" style="width:240px;">
-        <p style="margin-bottom:20px;font-size:18px;">访问统计</p>
-        <img src="https://badges.toozhao.com/badges/01G9NYGBKXCVD7GT0YGTKPJET9/blue.svg"
-            style="width:100%;margin:auto;" alt="连接异常">
-      </div>
-    </div>
+    <BottomBanner/>
   </div>
 </template>
 
 <script>
 // // @ is an alias to /src
 import TopBanner from '@/components/TopBanner.vue'
+import BottomBanner from '@/components/BottomBanner.vue'
 
 export default {
   name: 'HomeView',
   components: {
-    TopBanner
+    TopBanner,
+    BottomBanner
   },
   methods: {
     gotoLogin(){
