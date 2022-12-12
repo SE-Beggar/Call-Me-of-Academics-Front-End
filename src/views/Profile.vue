@@ -3,7 +3,7 @@
     <div class="user_box">
       <div class="inner_box">
         <div class="head_box">
-          <img src="../assets/image/style_img/default_head.png" class="head_pic">
+          <img src="../assets/image/heads/1.png" class="head_pic">
         </div>
         <div class="name_box">
           <div class="name">

@@ -5,15 +5,16 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    islogin: false,
-    username: 'Lorem ipsum',
-    email: '',
-    paperid: 0,
-    searchcontent: '',
-    authorID: 0,
-    advancecontent: [{ logic: 0, entry: 0, input: "" }],
-    type: 0,
-    timerange: ""
+    islogin:false,
+    username:'',
+    email:'',
+    paperid:0,
+    searchcontent:'',
+    authorID:0,
+    venueid:'0',
+    advancecontent:[{logic:0, entry:0, input:""}],
+    type:0,
+    timerange:""
   },
   getters: {
   },

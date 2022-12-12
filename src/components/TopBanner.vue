@@ -4,9 +4,10 @@
       <img src="../assets/image/style_img/header.png" style="float:left;height:72px;">
     </div>
 
-    <div class="top_mid">
+    <!-- <div class="top_mid">
       这里是导航区
-    </div>
+    </div> -->
+    
     <div class="top_right">
       <div v-if="this.$store.state.islogin===false">
       <div class="div_btn1" style="float:left" @click="gotoLogin">登录</div>

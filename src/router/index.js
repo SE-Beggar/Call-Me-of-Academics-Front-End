@@ -40,7 +40,7 @@ const routes = [
   },{
     path: '/main',
     name: 'Main',
-    component: () => import('../views/Main1.vue')
+    component: () => import('../views/ma.vue')
   },{
     path: '/searchPaper',
     name: 'SearchPaper',
@@ -50,13 +50,17 @@ const routes = [
     name: 'SearchAuthor',
     component: () => import('../views/SearchAuthor.vue')
   },{
+    path: '/searchvenue',
+    name: 'Searchvenue',
+    component: () => import('../views/venue.vue')
+  },{
     path: '/testpage',
     name: 'testpage',
     component: () => import('../views/Testpage.vue')
   },{
-    path: '/journal',
-    name: 'journal',
-    component: () => import('../views/Journal.vue')
+    path: '/collection',
+    name: 'collection',
+    component: () => import('../views/collection.vue')
   }
 ]
 

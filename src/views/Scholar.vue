@@ -4,20 +4,15 @@
       <div class="inner_box">
         <div class="head_box">
           <img
-            src="../assets/image/style_img/default_head.png"
+            src="../assets/image/heads/1.png"
             class="head_pic"
           />
         </div>
         <div class="name_box">
           <div class="name">
-            <p>{{ scholar.username }}</p>
+            <p>{{ scholar.name }}</p>
           </div>
           <div class="intro">
-            <div class="email">
-              <i class="el-icon-message icon" />
-              <div class="title">邮箱：</div>
-              {{ scholar.email }}
-            </div>
             <div class="orgs">
               <i class="el-icon-office-building icon" />
               <div class="title">机构：</div>
@@ -39,7 +34,7 @@
                 :key="index"
                 effect="plain"
               >
-                {{ interest }}
+                {{ interest.t }}
               </el-tag>
             </div>
           </div>
@@ -55,10 +50,11 @@
           <!-- 这里引入了 echarts 图表 -->
           <el-tab-pane label="信息分析" name="analysis">
             <AuthorAnalysis
-              :n-citation-sum="scholar.nCitationSum"
-              :n-downloaded-sum="scholar.nDownloadeSum"
-              :h-index="scholar.hIndex"
-              :parteners="scholar.parteners"
+              :name="scholar.name"
+              :nCitationSum="scholar.n_citation"
+              :nDownloadedSum="scholar.n_download"
+              :h-index="scholar.h_index"
+              :parteners="scholar.tags"
             />
           </el-tab-pane>
         </el-tabs>
@@ -70,53 +66,56 @@
 <script>
 import ArticlesTable from "@/components/ArticlesTable.vue";
 import AuthorAnalysis from "@/components/AuthorAnalysis.vue";
+import qs from "qs";
 export default {
   components: { ArticlesTable, AuthorAnalysis },
   data() {
     return {
       scholar: {
         id: 1,
-        username: "Hongbin Tan",
-        email: "thb@buaae.edu.cn",
+        name: "Hongbin Tan",
         orgs: ["Beihang University", "Natinal Science Park"],
-        tags: ["Software", "Data Mining", "VGG"],
+        tags: [{t:"software",w:60},{t:"math",w:200},{t:"chinese",w:35},{t:"english",w:100}],
         pubs: [
           {
             id: 20, //论文在数据库的id，而非在列表中的id
             title: "讨口子",
-            author: "潘海霞",
-            authorID: 20,
-            time: "2020.1.2",
+            authors:[{
+              id:1,
+              name:"扣子"
+            }],
+            year: "2020.1.2",
             publisher: "上海出版社",
-            downloadnum: 0,
-            quotenum: 10,
-          },
-          {
-            id: 20, //论文在数据库的id，而非在列表中的id
-            title: "讨口子",
-            author: "潘海霞",
-            authorID: 20,
-            time: "2020.1.2",
-            publisher: "上海出版社",
-            downloadnum: 0,
-            quotenum: 10,
+            n_download: 0,
+            n_citation: 10,
           },
         ],
-        nCitationSum: 1910,
-        nDownloadeSum: 201,
-        hIndex: 175,
-        parteners: [
-          { id: "2", username: "Li Zhang" },
-          { id: "3", username: "Hailong Sun" },
-          { id: "4", username: "San Zhang" },
-          { id: "5", username: "Si Li" },
-          { id: "6", username: "Wu Wang" },
-        ],
+        n_citation: 1910,
+        n_download: 201,
+        h_index: 175
       },
       currentTab: "articles",
     };
   },
-  created() {},
+  created() {
+    this.$axios({
+                    method: 'post', 
+                    url: '/api/paper/scholar/',
+                    data: qs.stringify({
+                      id:this.$store.state.authorID
+                    })
+                })
+                .then(res => {
+                    switch (res.data.errno) {
+                    case 0:
+                        this.scholar=res.data.scholar
+                        break;
+                    }
+                })
+                .catch(err => {
+                    console.log(err);  
+                })
+  },
   methods: {},
 };
 </script>
@@ -169,18 +168,15 @@ export default {
   .title {
     font-weight: bold;
   }
-
   .email {
     align-items: center;
     display: flex;
     flex-wrap: wrap;
   }
-
   .orgs {
     align-items: center;
     display: flex;
     flex-wrap: wrap;
-
     .org {
       display: flex;
       white-space: nowrap;
@@ -191,7 +187,6 @@ export default {
     align-items: center;
     display: flex;
     flex-wrap: wrap;
-
     .domain {
       display: flex;
       white-space: nowrap;

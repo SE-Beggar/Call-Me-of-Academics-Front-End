@@ -16,23 +16,14 @@
             </div>
         </div>
         <div id="searchResult">
-            <div v-for="i in scholars.length" :key=i>
+            <div v-for="i in venues.length" :key=i>
                 <el-card class="authorCard">
                     <div slot="header">
-                        <span>{{scholars[i-1].name}}</span>
-                        <el-button class="authorButton" @click="toDetail(scholars[i-1].id)">查看详情</el-button>
+                        <span>{{venues[i-1].raw}}</span>
+                        <el-button class="authorButton" @click="toDetail(venues[i-1].id)">查看详情</el-button>
                     </div>
                     <div class="text">
-                        <div style="float:left">发表论文数：{{scholars[i-1].n_pubs}}</div>
-                    </div>
-                    <div class="text">
-                        <div style="float:left">职位：{{scholars[i-1].position}}</div>
-                    </div>
-                    <div class="text">
-                        <div style="float:left">论文总引用量：{{scholars[i-1].n_citation}}</div>
-                    </div>
-                    <div v-if="scholars[i-1].isidentify==0">
-                        <el-button type="primary" @click="identify(scholars[i-1].id)">认证该学者</el-button>
+                        <div style="float:left">简介：{{venues[i-1].abstract}}</div>
                     </div>
                 </el-card>
             </div>
@@ -97,66 +88,42 @@ export default {
         return {
             input: '',
             select: '',
-            scholars:[{
+            venues:[{
                 id:1,
-                name:'名字',
-                isidentify:1,
-                position:'北航',
-                n_pubs:10,
-                n_citation:20,
-            },{
-                id:1,
-                name:'名字',
-                isidentify:0,
-                position:'北航',
-                n_pubs:10,
-                n_citation:20
-            },{
-                id:1,
-                name:'名字',
-                isidentify:0,
-                position:'北航',
-                n_pubs:10,
-                n_citation:20
-            },{
-                id:1,
-                name:'名字',
-                isidentify:1,
-                position:'北航',
-                n_pubs:10,
-                n_citation:20
+                raw:'名字',
+                abstract:"这是一个期刊"
             }]
         }
     },
     created(){
         this.$axios({
                 method: 'post', 
-                url: '/api/paper/searchscholar/',
+                url: '/api/collection/search/',
                     data: qs.stringify({
-                        scholar:this.$store.state.searchcontent
+                        name:this.$store.state.searchcontent
                     })
                 })
                 .then(res => {
                     switch (res.data.errno) {
                     case 0:
-                        this.scholars=res.data.scholars;
+                        this.venues=res.data.venues
                         break;
                     }
                 })
                 .catch(err => {
                     console.log(err);  
-                })
+                })   
     },
     methods: {
         search() {
             if (this.select == 2) {
                 //搜学者 关键词this.input
                 this.$store.state.searchcontent=this.input;
-                this.$router.go(0)
+                this.$router.push('/searchauthor')
             }
-            else if(this.select ==3){
+            else if(this.select == 3){
                 this.$store.state.searchcontent=this.input;
-                this.$router.push('/searchvenue')
+                this.$router.go(0);
             }
             else {
                 this.$store.state.type=1;
@@ -165,34 +132,13 @@ export default {
             }
         }, 
         toAdvanced() {
-            //前往高级检索页面
+            this.$store.state.type=2;
             this.$router.push('/advancedsearch')
         },
         toDetail(id){
-            this.$store.state.authorID=id;
-            this.$router.push('/')
-            //学者详情页面路由
+            this.$store.state.venueid=id;
+            this.$router.push('/collection')
         },
-        identify(id){
-            this.$axios({
-                method: 'post', 
-                url: '/api/user/identify/',
-                    data: qs.stringify({
-                        scholarid:id,
-                        email:this.$store.state.email
-                    })
-                })
-                .then(res => {
-                    switch (res.data.errno) {
-                    case 0:
-                        this.$message.success("操作成功,等待管理员核验");
-                        break;
-                    }
-                })
-                .catch(err => {
-                    console.log(err);  
-                })            
-        }
     }
 }
 </script>

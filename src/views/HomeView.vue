@@ -16,7 +16,7 @@
       <a href="/paperdetail">论文详情页面</a>
       <a href="/profile">个人信息页面</a>
       <a href="/scholar">学者个人信息页面</a>
-      <a href="/journal">期刊页面</a>
+      <a href="/collection">期刊页面</a>
       <a href="/testpage">样式测试</a>
     </div>
 

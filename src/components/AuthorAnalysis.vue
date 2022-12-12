@@ -1,4 +1,3 @@
-<!-- 注意 npm i 来引入 echarts -->
 <template>
   <div class="authorAnalysis">
     <div class="citationTable">
@@ -6,7 +5,7 @@
       <div id="citation" class="table"></div>
     </div>
     <div class="relationTable">
-      <div class="title">合作学者</div>
+      <div class="title">领域权重</div>
       <div id="relation" class="table"></div>
     </div>
   </div>
@@ -22,7 +21,7 @@ echarts.use([GridComponent, BarChart, CanvasRenderer, GraphChart]);
 export default {
   name: "AuthorAnalysis",
   components: {},
-  props: ["nCitationSum", "nDownloadedSum", "hIndex", "parteners"],
+  props: ["name","nCitationSum", "nDownloadedSum", "hIndex", "parteners"],
   data() {
     return {};
   },
@@ -34,7 +33,7 @@ export default {
       option = {
         xAxis: {
           type: "category",
-          data: ["被引用量", "被下载量", "h因子"],
+          data: ["被引用量", "被下载量", "H指数"],
         },
         yAxis: {
           type: "value",
@@ -59,13 +58,13 @@ export default {
     // 中心节点是全局用户的用户名，周围节点来自 props.partners,
     createNodes(count) {
       var nodes = [
-        { id: 1000 + "", name: this.$store.state.username, symbolSize: 70 },
+        { id: 1000 + "", name:this.name, symbolSize: 40},
       ];
       for (var i = 0; i < count; i++) {
         nodes.push({
           id: i + "",
-          name: this.parteners[i].username,
-          symbolSize: 55,
+          name: this.parteners[i].t,
+          symbolSize: this.parteners[i].w,
         });
       }
       return nodes;
@@ -102,14 +101,14 @@ export default {
             animation: false,
             data: item.nodes,
             left: (idx % 4) * 25 + "%",
-            top: Math.floor(idx / 4) * 20 - (20 - i) * 2 + "%",
+            top: Math.floor(idx / 4) * 20 - (20 - i) * 2 + 20 + "%",
             height: "100%",
             width: "100%",
             force: {
               initLayout: "circular",
               // gravity: 0
-              repulsion: i * 40,
-              edgeLength: i * 10,
+              repulsion: i * 300,
+              edgeLength: i * 50,
             },
             edges: item.edges.map(function (e) {
               return {
