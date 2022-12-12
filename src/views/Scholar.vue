@@ -52,6 +52,7 @@
           <el-tab-pane label="发表文献" name="articles">
             <ArticlesTable :papers="scholar.pubs" />
           </el-tab-pane>
+          <!-- 这里引入了 echarts 图表 -->
           <el-tab-pane label="信息分析" name="analysis">
             <AuthorAnalysis
               :n-citation-sum="scholar.nCitationSum"

@@ -1,3 +1,4 @@
+<!-- 注意 npm i 来引入 echarts -->
 <template>
   <div class="authorAnalysis">
     <div class="citationTable">
