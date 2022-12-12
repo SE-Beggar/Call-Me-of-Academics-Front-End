@@ -41,7 +41,7 @@ const routes = [
     path: '/searchAuthor',
     name: 'SearchAuthor',
     component: () => import('../views/SearchAuthor.vue')
-  }
+  },
 ]
 
 const router = new VueRouter({

@@ -15,12 +15,8 @@
             </div>
         </div>
         <div id="recommend">
-            <div>
-                <el-select v-model="value" placeholder="选择领域">
-                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                    </el-option>
-                </el-select>
-                <el-button @click="changeSubject">探索领域</el-button>
+            <div id="cloud">
+                <div ref="wordcloud" class="wordcloud"></div>
             </div>
             <div id="recommendAuthor" v-for="i in 4" :key=i>
                 <el-card class="authorCard">
@@ -39,6 +35,7 @@
                     </div>
                 </el-card>
             </div>
+            <div id="random">您可能对这些感兴趣。。。</div>
             <div id="recommendPaper">
                 <el-table :data="recommendPapers" style="width: 100%">
                     <el-table-column type="index"> </el-table-column>
@@ -121,6 +118,18 @@
 #recommendPaper {
     margin-top: 50px;
 }
+
+.wordcloud {
+    width: 100%;
+    height: 300px;
+    margin: auto;
+}
+
+#random {
+    width:100%;
+    float: left;
+    margin-top: 20px;
+}
 </style>
 
 
@@ -132,23 +141,27 @@
 同时在create中给recommendAuthors赋初始值authors[0](recommendPapers类似)
 然后根据点击导航栏给recommendAuthors、recommendPapers赋值（无需交互，已完成），展示的是recommendAuthors、recommendPapers中的内容
 */
+import "echarts-wordcloud/dist/echarts-wordcloud";
+import "echarts-wordcloud/dist/echarts-wordcloud.min";
 export default {
     data() {
         return {
-            options: [{
+            options: [
+            {
                 value: 1,
-                label: '数学'
+                name: '数学'
             }, {
                 value: 2,
-                label: '物理'
+                name: '物理'
             }, {
                 value: 3,
-                label: '化学'
+                name: '化学'
             }, {
                 value: 4,
-                label: '生物'
-            },],
-            value: '',
+                name: '生物'
+            },
+        ],
+            value: 1,
             input: '',
             select: '',
             recommendAuthors: [//推荐的学者列表（4个），初始为数学学科的学者即authors[0]
@@ -417,7 +430,61 @@ export default {
             ],
         }
     },
+    mounted() {
+        this.initchart();
+    },
     methods: {
+        initchart() {
+            let myChart = this.$echarts.init(this.$refs.wordcloud);
+            myChart.setOption({
+                series: [
+                    {
+                        type: "wordCloud",
+                        //用来调整词之间的距离
+                        gridSize: 10,
+                        //用来调整字的大小范围
+                        // Text size range which the value in data will be mapped to.
+                        // Default to have minimum 12px and maximum 60px size.
+                        sizeRange: [14, 60],
+                        // Text rotation range and step in degree. Text will be rotated randomly in range [-90,                                                                             90] by rotationStep 45
+                        //用来调整词的旋转方向，，[0,0]--代表着没有角度，也就是词为水平方向，需要设置角度参考注释内容
+                        // rotationRange: [-45, 0, 45, 90],
+                        // rotationRange: [ 0,90],
+                        rotationRange: [0, 0],
+                        //随机生成字体颜色
+                        // maskImage: maskImage,
+                        textStyle: {
+                            color: function () {
+                                return (
+                                    "rgb(" +
+                                    Math.round(Math.random() * 255) +
+                                    ", " +
+                                    Math.round(Math.random() * 255) +
+                                    ", " +
+                                    Math.round(Math.random() * 255) +
+                                    ")"
+                                );
+                            }
+                        },
+                        //位置相关设置
+                        // Folllowing left/top/width/height/right/bottom are used for positioning the word cloud
+                        // Default to be put in the center and has 75% x 80% size.
+                        left: "center",
+                        top: "center",
+                        right: null,
+                        bottom: null,
+                        width: "200%",
+                        height: "200%",
+                        //数据
+                        data: this.options
+                    }
+                ]
+            })
+            myChart.on('click', (params) => {//词云点击响应
+                this.recommendAuthors = this.authors[params.data.value - 1];
+                this.recommendPapers = this.papers[params.data.value - 1];
+            })
+        },
         search() {
             if (this.select == 2) {
                 //搜学者 关键词this.input
@@ -442,7 +509,7 @@ export default {
         changeSubject() {
             this.recommendAuthors=this.authors[this.value-1];
             this.recommendPapers=this.papers[this.value-1];
-        }
+        },
     }
 }
 </script>

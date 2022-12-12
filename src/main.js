@@ -5,6 +5,10 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+//运行npm install echarts和npm install echarts-wordcloud
+import * as echarts from 'echarts';
+Vue.prototype.$echarts = echarts
+
 Vue.use(ElementUI);
 
 Vue.config.productionTip = false
