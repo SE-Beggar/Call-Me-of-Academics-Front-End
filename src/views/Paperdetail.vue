@@ -119,8 +119,20 @@
             ret(){
                 this.$router.back();
             },
-            download(){
-
+            download(){       
+        let url="https:"+this.paper.href
+        //let url = "https://dl.winmoes.com/wp-content/uploads/2022/08/4448412e3b83cf8.png?imageMogr2/crop/626x"
+        const downloadRes = async () => {
+        let response = await fetch(url); 
+        let blob = await response.blob();  
+        let objectUrl = window.URL.createObjectURL(blob);
+        let a = document.createElement('a');
+        a.href = objectUrl;
+        a.download = "文献";
+        a.click()
+        a.remove(); 
+       }
+      downloadRes();
             },
             preview(){
                 let hre="https:"+this.paper.href;
