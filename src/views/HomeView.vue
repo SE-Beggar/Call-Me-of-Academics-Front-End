@@ -1,22 +1,25 @@
 <template>
-  <!-- <div class="home">
-    <h1>当前已有的页面</h1>
-    <br/>
-    <br/>
-    <a href="/register">注册页面</a>
-    <a href="/login">登录页面</a>
-    <a href="/main">主页面</a>
-    <a href="/advancedsearch">高级搜索页面</a>
-    <a href="/searchPaper">搜索论文页面</a>
-    <a href="/searchAuthor">搜索学者页面</a>
-    <a href="/paperdetail">论文详情页面</a>
-    <a href="/profile">个人信息页面</a>
-    <a href="/scholar">学者个人信息页面</a>
-    <a href="/testpage">样式测试</a>
-  </div> -->
   <div>
     <TopBanner/>
     <div style="height:100px;"></div>
+
+    <div class="home">
+      <h1>当前已有的页面</h1>
+      <br/>
+      <br/>
+      <a href="/register">注册页面</a>
+      <a href="/login">登录页面</a>
+      <a href="/main">主页面</a>
+      <a href="/advancedsearch">高级搜索页面</a>
+      <a href="/searchPaper">搜索论文页面</a>
+      <a href="/searchAuthor">搜索学者页面</a>
+      <a href="/paperdetail">论文详情页面</a>
+      <a href="/profile">个人信息页面</a>
+      <a href="/scholar">学者个人信息页面</a>
+      <a href="/journal">期刊页面</a>
+      <a href="/testpage">样式测试</a>
+    </div>
+
     <div>
         <div class="text_head">
           免费在线的学术成果分享平台
@@ -259,7 +262,7 @@ export default {
 
 
 .home{
-  margin: 128px auto auto;
+  margin:auto;
   width:400px;
   border: 4px solid black;
 }
