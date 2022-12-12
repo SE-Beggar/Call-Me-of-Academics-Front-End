@@ -3,29 +3,58 @@
     <div class="user_box">
       <div class="inner_box">
         <div class="head_box">
-          <img src="../assets/image/style_img/default_head.png" class="head_pic">
+          <img
+            src="../assets/image/style_img/default_head.png"
+            class="head_pic"
+          />
         </div>
         <div class="name_box">
           <div class="name">
-            <p>{{ scholar.username }}</p>
+            <p>{{ scholar.name }}</p>
           </div>
           <div class="intro">
-            <p><b>学者简介：</b>{{ scholar.scholar_info }}</p>
+            <div class="orgs">
+              <i class="el-icon-office-building icon" />
+              <div class="title">机构：</div>
+              <el-tag
+                v-for="(org, index) in scholar.orgs"
+                :key="index"
+                class="org"
+                effect="plain"
+              >
+                {{ org }}
+              </el-tag>
+            </div>
+            <div class="domains">
+              <i class="el-icon-discover icon" />
+              <div class="title">领域：</div>
+              <el-tag
+                class="domain"
+                v-for="(interest, index) in scholar.tags"
+                :key="index"
+                effect="plain"
+              >
+                {{ interest.t }}
+              </el-tag>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div class="user_info">
       <div class="inner_box2">
-        <el-tabs v-model="panel" @tab-click="">
-          <el-tab-pane label="学者信息" name="info">
-
-          </el-tab-pane>
-          <el-tab-pane label="信息统计" name="statistics">
-
+        <el-tabs v-model="currentTab" @tab-click="">
+          <el-tab-pane label="发表文献" name="articles">
+            <ArticlesTable :papers="scholar.pubs" />
           </el-tab-pane>
           <el-tab-pane label="信息分析" name="analysis">
-
+            <AuthorAnalysis
+              :name="scholar.name"
+              :nCitationSum="scholar.n_citation"
+              :nDownloadedSum="scholar.n_download"
+              :h-index="scholar.h_index"
+              :parteners="scholar.tags"
+            />
           </el-tab-pane>
         </el-tabs>
       </div>
@@ -33,19 +62,75 @@
   </div>
 </template>
 
-<style scoped>
-.user_box{
-  width:100%;
+<script>
+import ArticlesTable from "@/components/ArticlesTable.vue";
+import AuthorAnalysis from "@/components/AuthorAnalysis.vue";
+import qs from "qs";
+export default {
+  components: { ArticlesTable, AuthorAnalysis },
+  data() {
+    return {
+      scholar: {
+        id: 1,
+        name: "Hongbin Tan",
+        orgs: ["Beihang University", "Natinal Science Park"],
+        tags: [{t:"software",w:60},{t:"math",w:200},{t:"chinese",w:35},{t:"english",w:100}],
+        pubs: [
+          {
+            id: 20, //论文在数据库的id，而非在列表中的id
+            title: "讨口子",
+            authors:[{
+              id:1,
+              name:"扣子"
+            }],
+            year: "2020.1.2",
+            publisher: "上海出版社",
+            n_download: 0,
+            n_citation: 10,
+          },
+        ],
+        n_citation: 1910,
+        n_download: 201,
+        h_index: 175
+      },
+      currentTab: "articles",
+    };
+  },
+  created() {
+    this.$axios({
+                    method: 'post', 
+                    url: '/api/paper/scholar/',
+                    data: qs.stringify({
+                      id:this.$store.state.authorID
+                    })
+                })
+                .then(res => {
+                    switch (res.data.errno) {
+                    case 0:
+                        this.scholar=res.data.scholar
+                        break;
+                    }
+                })
+                .catch(err => {
+                    console.log(err);  
+                })
+  },
+  methods: {},
+};
+</script>
+
+<style scoped lang="scss">
+.user_box {
+  width: 100%;
 }
-.inner_box{
-  width: 64%;
+.inner_box {
   margin: auto;
 }
-.inner_box2{
-  width: 48%;
+.inner_box2 {
+  width: 800px;
   margin: auto;
 }
-.head_box{
+.head_box {
   display: inline-block;
   vertical-align: top;
   width: 160px;
@@ -54,57 +139,64 @@
   border-radius: 80px;
   margin: 60px 10px 20px;
 }
-.head_pic{
-  width:100%;
+.head_pic {
+  width: 100%;
   border-radius: 80px;
 }
-.name_box{
+.name_box {
   display: inline-block;
   vertical-align: top;
-  height: 160px;
-  width: 480px;
-  margin: 60px 10px 20px;
+  width: 600px;
+  margin: 60px 10px 10px;
 }
-.name{
+.name {
   height: 60px;
 }
-.name>p{
+.name > p {
   font-size: 42px;
   font-weight: 700;
   text-align: left;
 }
-.intro{
-  height: 100px;
-  overflow: auto;
+.intro {
+  text-align: left;
+  line-height: 200%;
+  .icon {
+    font-size: 18px;
+    margin-right: 5px;
+  }
+  .title {
+    font-weight: bold;
+  }
+  .email {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .orgs {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    .org {
+      display: flex;
+      white-space: nowrap;
+      margin: 5px 5px 5px 0px;
+    }
+  }
+  .domains {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    .domain {
+      display: flex;
+      white-space: nowrap;
+      margin: 5px 5px 5px 0px;
+    }
+  }
 }
-.intro>p{
+.intro > p {
   text-align: left;
 }
-.user_info{
+.user_info {
   width: 100%;
 }
 </style>
-
-<script>
-import qs from "qs";
-export default{
-  data(){
-    return{
-      scholar:{
-        username:"谭火彬",
-        email:"lorem@ipsum.com",
-        scholar_info:"谭火彬，男，博士，副教授，研究生导师，现任职于北京航空航天大学。教学方面，承担了北航学院和软件学院多门程序设计和软件工程专业本科和研究生核心课程。主要从事软件工程、智能化软件和大数据分析等领域的教学和科研工作。",
-        password:"password",
-        identity:"研究人员"
-      },
-      panel:"info"
-    }
-  },
-  created(){
-      
-  },
-  methods:{
-
-  }
-}
-</script>

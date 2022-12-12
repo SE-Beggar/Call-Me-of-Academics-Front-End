@@ -6,6 +6,7 @@
                     <el-select v-model="select" slot="prepend" placeholder="论文检索">
                         <el-option label="论文检索" value="1"></el-option>
                         <el-option label="学者检索" value="2"></el-option>
+                        <el-option label="期刊检索" value="3"></el-option>
                     </el-select>
                     <el-button slot="append" icon="el-icon-search" v-on:click="search">搜索</el-button>
                 </el-input>
@@ -23,18 +24,6 @@
                     <el-checkbox-group v-model="typeSelected">
                         <div v-for="t in types" :key="t">
                             <el-checkbox :label="t" class="type"></el-checkbox>
-                        </div>
-                    </el-checkbox-group>
-                </el-card>
-            </div>
-            <div id="subjectList">
-                <el-card>
-                    <div slot="header" class="clearfix">
-                        <span>学科分类</span>
-                    </div>
-                    <el-checkbox-group v-model="subjectSelected">
-                        <div v-for="t in subjects" :key="t">
-                            <el-checkbox :label="t" class="subject"></el-checkbox>
                         </div>
                     </el-checkbox-group>
                 </el-card>
@@ -57,16 +46,16 @@
             <el-table :data="papers.slice((currentPage-1)*pagesize,currentPage*pagesize)" style="width: 100%" :current-page.sync="currentPage">
                 <el-table-column type="index"> </el-table-column>
                 <el-table-column prop="title" label="论文标题"></el-table-column>
-                <el-table-column prop="author" label="第一作者">
+                <el-table-column prop="authors[0].name" label="第一作者">
                     <template slot-scope="scope">
-                        <el-link @click="authorDetail(scope.row.authorID)">
-                            {{scope.row.author}}
+                        <el-link @click="authorDetail(scope.row.authors[0].id)">
+                            {{scope.row.authors[0].name}}
                         </el-link>
                     </template>
                 </el-table-column>
                 <el-table-column prop="publisher" label="所属机构"></el-table-column>
-                <el-table-column prop="year" label="发表时间" sortable></el-table-column>
-                <el-table-column prop="downloadnum" label="下载次数" sortable></el-table-column>
+                <el-table-column prop="year" label="发布年份" sortable></el-table-column>
+                <el-table-column prop="n_download" label="下载次数" sortable></el-table-column>
                 <el-table-column prop="n_citation" label="被引次数" sortable></el-table-column>
                 <el-table-column prop="id" label="操作">
                     <template slot-scope="scope">
@@ -144,7 +133,7 @@
 <script>
 /*
 结果中筛选想法：
-目前设置三个筛选项：学科subjectSelected、类型typeSelected、发表时间yearSelected
+目前设置三个筛选项：学科subjectSelected、类型typeSelected、发布年份yearSelected
 各个筛选项内取并集，然后三个筛选项之间取交集得到筛选后结果（若某一筛选项为空表示该筛选项全选，各筛选项默认为空）
 */
 import qs from "qs";
@@ -160,13 +149,6 @@ export default {
                 "会议",
             ],
             typeSelected:[],//存放已被选择的type的数组，下同
-            subjects:[
-                "数学",
-                "物理",
-                "生物",
-                "化学"
-            ],
-            subjectSelected:[],
             years: [
                 "2022",
                 "2021",
@@ -182,21 +164,13 @@ export default {
                 {
                     "id":20,//论文在数据库的id，而非在列表中的id
                     "title": "讨口子1",
-                    "author": "潘海霞",
-                    "authorID": 20,
-                    "year": "2020",
+                    authors:[{
+                        id:1,
+                        name:"名字1"
+                    }],
+                    "year": "2021",
                     "publisher": "上海出版社",
-                    "downloadnum":0,
-                    "n_citation":10
-                },
-                {
-                    "id": 30,//论文在数据库的id，而非在列表中的id
-                    "title": "讨口子2",
-                    "author": "潘海霞",
-                    "authorID": 20,
-                    "year": "2020",
-                    "publisher": "上海出版社",
-                    "downloadnum":0,
+                    "n_download":1,
                     "n_citation":10
                 }
             ],
@@ -210,7 +184,6 @@ export default {
                     data: qs.stringify({
                         title:this.$store.state.searchcontent,
                         typeSelected:this.typeSelected,
-                        subjectSelected:this.subjectSelected,
                         yearSelected:this.yearSelected
                     })
                 })
@@ -232,7 +205,6 @@ export default {
                     data: qs.stringify({
                         advancecontent:this.$store.state.advancecontent,
                         typeSelected:this.typeSelected,
-                        subjectSelected:this.subjectSelected,
                         yearSelected:this.yearSelected
                     })
                 })
@@ -263,6 +235,10 @@ export default {
                 this.$store.state.searchcontent=this.input;
                 this.$router.push('/searchAuthor')
             }
+            else if(this.select ==3){
+                this.$store.state.searchcontent=this.input;
+                this.$router.push('/searchvenue')
+            }
             else {
                 this.$store.state.type=1;
                 this.$store.state.searchcontent=this.input;
@@ -271,8 +247,7 @@ export default {
         },
         authorDetail(authorID) {
             this.$store.state.authorID=authorID;
-            this.$router.push('/')
-            //学者详情页面路由未写..
+            this.$router.push('/scholar')
         },
         paperDetail(paperID) {
             //进入id为paperID的论文详情页面

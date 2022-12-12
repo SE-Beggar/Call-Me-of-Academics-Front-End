@@ -11,6 +11,7 @@ export default new Vuex.Store({
     paperid:0,
     searchcontent:'',
     authorID:0,
+    venueid:'0',
     advancecontent:[{logic:0, entry:0, input:""}],
     type:0,
     timerange:""

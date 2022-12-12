@@ -36,7 +36,7 @@
               <div class="operations">
                 <div class="operation" v-show="!hide">
                   <i
-                    v-if="index > 0 && queries.length > 2"
+                    v-if="index > 0 && queries.length > 1"
                     class="el-icon-minus icon-item"
                     @click="delQuery(index)"
                   />
