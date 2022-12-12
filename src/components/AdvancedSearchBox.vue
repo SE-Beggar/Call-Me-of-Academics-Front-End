@@ -115,7 +115,7 @@ export default {
         { logic: 0, entry: 2, input: "" },
         { logic: 0, entry: 3, input: "" },
       ],
-      options: ["篇名", "关键词", "作者", "第一作者"],
+      options: ["篇名", "关键词", "期刊名", "作者", "第一作者"],
       timerange: "",
       pickerOptions: {
         shortcuts: [
@@ -167,10 +167,10 @@ export default {
       this.timerange = "";
     },
     searchClick() {
-      this.$store.state.advancecontent=this.queries
-      this.$store.state.timerange=this.timerange;
-      this.$store.state.type=2;
-      this.$router.push('/searchPaper');
+      this.$store.state.advancecontent = this.queries;
+      this.$store.state.timerange = this.timerange;
+      this.$store.state.type = 2;
+      this.$router.push("/searchPaper");
     },
     toggleBtnClick() {
       this.hide = !this.hide;
