@@ -22,10 +22,10 @@
                         <el-button class="authorButton" @click="toDetail(scholars[i-1].id)">查看详情</el-button>
                     </div>
                     <div class="text">
-                        <div style="float:left">发表论文数：{{scholars[i-1].papernum}}</div>
+                        <div style="float:left">发表论文数：{{scholars[i-1].n_pubs}}</div>
                     </div>
                     <div class="text">
-                        <div style="float:left">所属机构：{{scholars[i-1].company}}</div>
+                        <div style="float:left">职位：{{scholars[i-1].position}}</div>
                     </div>
                     <div class="text">
                         <div style="float:left">论文总下载量：{{scholars[i-1].downloadnum}}</div>
@@ -101,29 +101,29 @@ export default {
                 id:1,
                 name:'名字',
                 isidentify:1,
-                company:'北航',
-                papernum:10,
+                position:'北航',
+                n_pubs:10,
                 downloadnum:20,
             },{
                 id:1,
                 name:'名字',
                 isidentify:0,
-                company:'北航',
-                papernum:10,
+                position:'北航',
+                n_pubs:10,
                 downloadnum:20
             },{
                 id:1,
                 name:'名字',
                 isidentify:0,
-                company:'北航',
-                papernum:10,
+                position:'北航',
+                n_pubs:10,
                 downloadnum:20
             },{
                 id:1,
                 name:'名字',
                 isidentify:1,
-                company:'北航',
-                papernum:10,
+                position:'北航',
+                n_pubs:10,
                 downloadnum:20
             }]
         }

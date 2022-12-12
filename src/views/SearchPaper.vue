@@ -65,9 +65,9 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="publisher" label="所属机构"></el-table-column>
-                <el-table-column prop="time" label="发表时间" sortable></el-table-column>
+                <el-table-column prop="year" label="发表时间" sortable></el-table-column>
                 <el-table-column prop="downloadnum" label="下载次数" sortable></el-table-column>
-                <el-table-column prop="quotenum" label="被引次数" sortable></el-table-column>
+                <el-table-column prop="n_citation" label="被引次数" sortable></el-table-column>
                 <el-table-column prop="id" label="操作">
                     <template slot-scope="scope">
                         <el-button type="primary" @click="paperDetail(scope.row.id)">查看详情</el-button>
@@ -184,20 +184,20 @@ export default {
                     "title": "讨口子1",
                     "author": "潘海霞",
                     "authorID": 20,
-                    "time": "2020.1.2",
+                    "year": "2020",
                     "publisher": "上海出版社",
                     "downloadnum":0,
-                    "quotenum":10
+                    "n_citation":10
                 },
                 {
                     "id": 30,//论文在数据库的id，而非在列表中的id
                     "title": "讨口子2",
                     "author": "潘海霞",
                     "authorID": 20,
-                    "time": "2020.1.2",
+                    "year": "2020",
                     "publisher": "上海出版社",
                     "downloadnum":0,
-                    "quotenum":10
+                    "n_citation":10
                 }
             ],
         }
