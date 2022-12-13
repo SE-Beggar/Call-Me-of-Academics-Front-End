@@ -5,8 +5,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    islogin:false,
-    username:'',
+    islogin:true,
+    username:'Lorem ipsum',
     email:'',
     paperid:0,
     searchcontent:'',

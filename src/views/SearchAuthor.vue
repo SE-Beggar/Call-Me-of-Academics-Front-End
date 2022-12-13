@@ -19,7 +19,7 @@
                 <el-link @click="toAdvanced">使用高级检索</el-link>
             </div>
         </div>
-        <div id="searchResult">
+        <div id="searchResult" style="min-height: 600px;">
             <div v-for="i in scholars.length" :key=i>
                 <el-card class="authorCard">
                     <div slot="header">
