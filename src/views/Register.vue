@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="register">
     <TopBanner/>
     <div class="form_box">
       <h1 class="box_title">注册</h1>
@@ -18,7 +18,7 @@
           <el-input class="el_in" placeholder="请输入验证码" v-model="code"
             prefix-icon="el-icon-s-check" clearable style="float:left;width:60%;">
           </el-input>
-          <el-button class="el_btn2" @click="send">发送</el-button>
+          <el-button class="el_btn2 btnblue" @click="send">发送</el-button>
         </el-form-item>
         <el-form-item>
           <el-input class="el_in" placeholder="请输入密码" v-model="password1"
@@ -34,8 +34,8 @@
           <el-button class="el_btn1" @click="Register"> 注册 </el-button>
         </el-form-item>
         <el-form-item>
-          <el-button class="el_btn3" @click="ret"> 返回 </el-button>
-          <el-button class="el_btn3" @click="gotologin"> 登录 </el-button>
+          <el-button class="el_btn3 btnred" @click="ret"> 返回 </el-button>
+          <el-button class="el_btn3 btngreen" @click="gotologin"> 登录 </el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -152,6 +152,13 @@ export default {
 }
 </script>
 <style scoped>
+#register{
+  min-height: 100vh;
+  background-image: url("../assets/image/pic1.png");
+  background-repeat:no-repeat;
+  background-size: 25%;
+  background-position:right bottom;
+}
 .form_box {
   width: 24%;
   height: auto;
@@ -195,7 +202,6 @@ export default {
   width: 32%;
   font-size:18px;
   color:white;
-  background-color: #66CCFF;
   border-radius:10px;
   border: 1px solid rgba(150, 169, 183, 0.413);
   padding: 10px;
@@ -208,7 +214,6 @@ export default {
   width: 42%;
   font-size:18px;
   color:white;
-  background-color: #66CCFF;
   border-radius:20px;
   border: 1px solid rgba(150, 169, 183, 0.413);
   padding: 10px;
@@ -217,7 +222,18 @@ export default {
 .el_btn3:hover {
   box-shadow: 0 2px 3px 0 rgba(0,0,0,0.25),0 4px 8px 0 rgba(0,0,0,0.20);
 }
-
+.btnblue{
+  background-color:#66CCFF;
+}
+.btnred{
+  background-color:#FF6666;
+}
+.btnorange{
+  background-color: #FF9966;
+}
+.btngreen{
+  background-color: #99CC66;
+}
 
 /* form.form2 {
   width: 300px;

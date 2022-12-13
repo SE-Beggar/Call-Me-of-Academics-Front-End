@@ -21,32 +21,32 @@
 
     <div>
         <div class="text_head">
-          免费在线的学术成果分享平台
+          免费的在线学术成果分享平台
         </div>
         <div class="text_detail">
           面向广大科研从业人员的学术成果分享平台，为认证通过的科研从业人员建立个人门户系统，分类管理和维护个人学术成果
         </div>
     </div>
 
-    <div class="div_btn2" @click="gotoMain"
+    <div class="div_btn2 btnblack" @click="gotoMain"
       style="margin:auto;margin-top:40px;margin-bottom:60px;">
       开始使用
     </div>
 
     <div class="div_intro1">
       <div class="intro_img">
-        <img src="../assets/image/img_test.jpg">
+        <img src="../assets/image/pic1.png">
       </div>
       <div class="intro_text">
         <div class="text_head">
-          跳转_____页面
+          无需账号，但你可能想有一个
         </div>
         <div class="text_detail">
-          宣传语宣传语宣传语宣传语宣传语宣传语宣传语宣传语宣传语宣传语宣传语宣传语
+          使用本站绝大多数功能内容都无需账号，如果您想有账号或有更专业的需求可以注册
         </div>
-        <div class="div_btn2" @click="gotoLogin"
+        <div class="div_btn2" @click="gotoRegister"
           style="margin:auto;margin-top:40px;margin-bottom:60px;">
-          开始使用
+          注册账号
         </div>
       </div>
     </div>
@@ -54,35 +54,35 @@
     <div class="div_intro2">
       <div class="intro_text">
         <div class="text_head">
-          跳转_____页面
+          沉浸于学术的海洋
         </div>
         <div class="text_detail">
-          宣传语宣传语宣传语宣传语宣传语宣传语宣传语宣传语宣传语宣传语宣传语宣传语
+          首页独家推荐，词云系统，荐你想见
         </div>
-        <div class="div_btn2" @click="gotoLogin"
+        <div class="div_btn2 btnblue" @click="gotoMain"
           style="margin:auto;margin-top:40px;margin-bottom:60px;">
-          开始使用
+          进入主页
         </div>
       </div>
       <div class="intro_img">
-        <img src="../assets/image/img_test.jpg">
+        <img src="../assets/image/pic2.png">
       </div>
     </div>
 
     <div class="div_intro1">
       <div class="intro_img">
-        <img src="../assets/image/img_test.jpg">
+        <img src="../assets/image/pic3.png">
       </div>
       <div class="intro_text">
         <div class="text_head">
-          跳转_____页面
+          轻松查找论文
         </div>
         <div class="text_detail">
-          宣传语宣传语宣传语宣传语宣传语宣传语宣传语宣传语宣传语宣传语宣传语宣传语
+          支持多种高级搜索方式，多种分类和过滤手段，助力于论文查找
         </div>
-        <div class="div_btn2" @click="gotoLogin"
+        <div class="div_btn2" @click="gotoPaper"
           style="margin:auto;margin-top:40px;margin-bottom:60px;">
-          开始使用
+          查找论文
         </div>
       </div>
     </div>
@@ -90,18 +90,18 @@
     <div class="div_intro2">
       <div class="intro_text">
         <div class="text_head">
-          跳转_____页面
+          轻松查找学者
         </div>
         <div class="text_detail">
-          宣传语宣传语宣传语宣传语宣传语宣传语宣传语宣传语宣传语宣传语宣传语宣传语
+          多种方式查找学者，学者设立门户，展示信息更加全面
         </div>
-        <div class="div_btn2" @click="gotoLogin"
+        <div class="div_btn2 btnblue" @click="gotoScholar"
           style="margin:auto;margin-top:40px;margin-bottom:60px;">
-          开始使用
+          查找学者
         </div>
       </div>
       <div class="intro_img">
-        <img src="../assets/image/img_test.jpg">
+        <img src="../assets/image/pic4.png">
       </div>
     </div>
 
@@ -121,14 +121,17 @@ export default {
     BottomBanner
   },
   methods: {
-    gotoLogin(){
-        this.$router.push("/login")
-    },
     gotoRegister(){
         this.$router.push("/register")
     },
     gotoMain(){
         this.$router.push("/main")
+    },
+    gotoPaper(){
+        this.$router.push("/searchpaper")
+    },
+    gotoScholar(){
+        this.$router.push("/searchAuthor")
     }
   }
 }
@@ -144,15 +147,25 @@ export default {
   width: 80px;
   transition: 1.0s;
 }
+.btnblack{
+  background-color:black;
+}
+.btnblue{
+  background-color:#66CCFF;
+}
+.btnred{
+  background-color:#FF6666;
+}
+.btnorange{
+  background-color: #FF9966;
+}
 .div_btn1:hover {
   cursor: pointer;
   box-shadow: 0 4px 6px 0 rgba(0,0,0,0.24),0 6px 18px 0 rgba(0,0,0,0.19);
 }
-
 .div_btn2{
   color:white;
   font-size: 24px;
-  background-color:black;
   border: 1px solid rgba(150, 169, 183, 0.413);
   border-radius: 10px;
   margin: 10px;
@@ -162,9 +175,9 @@ export default {
 }
 .div_btn2:hover {
   cursor: pointer;
-  padding: 20px 48px;
-  width:240px;
-  box-shadow: 0 10px 16px 0 rgba(0,0,0,0.24),0 14px 36px 0 rgba(0,0,0,0.19);
+  padding: 18px 38px;
+  width:220px;
+  box-shadow: 0 5px 8px 0 rgba(0,0,0,0.24),0 7px 18px 0 rgba(0,0,0,0.19);
 }
 
 .text_head {

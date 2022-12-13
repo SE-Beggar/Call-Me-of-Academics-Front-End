@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="login">
     <TopBanner/>
     <div class="form_box">
       <h1 class="box_title">登录</h1>
@@ -29,8 +29,8 @@
           <el-button class="el_btn1" @click="login"> 登录 </el-button>
         </el-form-item>
         <el-form-item>
-          <el-button class="el_btn2" @click="ret"> 返回 </el-button>
-          <el-button class="el_btn2" @click="gotoRegister"> 注册 </el-button>
+          <el-button class="el_btn2 btnred" @click="ret"> 返回 </el-button>
+          <el-button class="el_btn2 btngreen" @click="gotoRegister"> 注册 </el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -114,6 +114,13 @@ export default {
 };
 </script>
 <style scoped>
+#login{
+  min-height: 100vh;
+  background-image: url("../assets/image/pic4.png");
+  background-repeat:no-repeat;
+  background-size: 30%;
+  background-position:right bottom;
+}
 .form_box {
   width: 24%;
   height: auto;
@@ -157,7 +164,6 @@ export default {
   width: 42%;
   font-size:18px;
   color:white;
-  background-color: #66CCFF;
   border-radius:20px;
   border: 1px solid rgba(150, 169, 183, 0.413);
   padding: 10px;
@@ -166,7 +172,15 @@ export default {
 .el_btn2:hover {
   box-shadow: 0 2px 3px 0 rgba(0,0,0,0.25),0 4px 8px 0 rgba(0,0,0,0.20);
 }
-
+.btnred{
+  background-color:#FF6666;
+}
+.btnorange{
+  background-color: #FF9966;
+}
+.btngreen{
+  background-color: #99CC66;
+}
 /* form.form1 {
   width: 300px;
   height: 300px;
