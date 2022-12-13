@@ -25,7 +25,7 @@ export default {
 <style scoped>
 .div_intro1 {
   width: 100%;
-  display: block;
+  float: left;
   height: 600px;
   background: linear-gradient(to right, #66CCFF, #daf1fc); 
 }

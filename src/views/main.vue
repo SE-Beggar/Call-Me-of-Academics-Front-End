@@ -2,6 +2,9 @@
     <div>
         <TopBanner/>
         <div id="search">
+            <div v-if="this.AdvancedSearch==1">
+              <AdvancedSearchBox/>
+            </div>
             <div id="normalSearch">
                 <el-input placeholder="请输入内容" v-model="input">
                     <el-select v-model="select" slot="prepend" placeholder="论文检索">
@@ -60,16 +63,17 @@
                 </el-table>
             </div>
         </div>
+        <div style="height:100px;width:100%;float:left;"></div>
         <BottomBanner/>
     </div>
 </template>
 
 <style>
 #search {
-    margin-top: 50px;
+    margin-top: 40px;
     margin-left: 10%;
     width: 80%;
-    /* float: left; */
+    float: left;
 }
 #normalSearch {
     width: 90%;
@@ -87,7 +91,7 @@
     margin-top: 20px;
     margin-left: 10%;
     width: 80%;
-    /* float: left; */
+    float: left;
 }
 .menuItem {
     width: 10%;
@@ -132,15 +136,17 @@
 同时在create中给recommendAuthors赋初始值authors[0](recommendPapers类似)
 然后根据点击导航栏给recommendAuthors、recommendPapers赋值（无需交互，已完成），展示的是recommendAuthors、recommendPapers中的内容
 */
+import AdvancedSearchBox from "@/components/AdvancedSearchBox.vue";
 import BottomBanner from "@/components/BottomBanner.vue";
 import TopBanner from "@/components/TopBanner.vue";
 import "echarts-wordcloud/dist/echarts-wordcloud";
 import "echarts-wordcloud/dist/echarts-wordcloud.min";
 import qs from "qs";
 export default {
-    components: { TopBanner, BottomBanner },
+    components: { TopBanner, BottomBanner, AdvancedSearchBox },
     data() {
         return {
+            AdvancedSearch:0,
             options: [
                 {
                     value: 1,
@@ -300,9 +306,10 @@ export default {
             }
         },
         toAdvanced() {
+            this.AdvancedSearch=1-this.AdvancedSearch
             //前往高级检索页面
-            this.$store.state.type = 2;
-            this.$router.push("/advancedsearch");
+            // this.$store.state.type = 2;
+            // this.$router.push("/advancedsearch");
         },
         authorDetail(author) {
             this.$store.state.authorID = author;

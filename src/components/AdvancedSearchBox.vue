@@ -182,8 +182,8 @@ export default {
 <style lang="scss" scoped>
 .search {
   .container {
-    max-width: 1200px;
-    padding: 60px 25px;
+    max-width: 100%;
+    padding: 30px 15px;
     .box-card {
       padding: 5px 0 10px;
 
