@@ -1,10 +1,11 @@
 <template>
   <div>
+    <TopBanner/>
     <div class="user_box">
       <div class="inner_box">
         <div class="head_box">
           <img
-            src="../assets/image/style_img/default_head.png"
+            src="../assets/image/heads/1.png"
             class="head_pic"
           />
         </div>
@@ -44,10 +45,16 @@
     <div class="user_info">
       <div class="inner_box2">
         <el-tabs v-model="currentTab" @tab-click="">
-          <el-tab-pane label="发表文献" name="articles">
+          <el-tab-pane style="min-height:600px;" label="发表文献" name="articles">
             <ArticlesTable :papers="scholar.pubs" />
           </el-tab-pane>
-          <el-tab-pane label="信息分析" name="analysis">
+          <el-tab-pane style="min-height:600px;" label="用户信息" name="users" v-if="scholar.isidentify==1">
+            <p class="info_entry"><b>用户名：</b>{{user.username}}</p>     
+            <p class="info_entry"><b>邮箱：</b>{{user.email}}</p>
+            <p class="info_entry"><b>描述：</b>{{user.description}}</p> 
+          </el-tab-pane>
+          <!-- 这里引入了 echarts 图表 -->
+          <el-tab-pane style="min-height:600px;" label="信息分析" name="analysis">
             <AuthorAnalysis
               :name="scholar.name"
               :nCitationSum="scholar.n_citation"
@@ -59,15 +66,18 @@
         </el-tabs>
       </div>
     </div>
+    <BottomBanner/>
   </div>
 </template>
 
 <script>
 import ArticlesTable from "@/components/ArticlesTable.vue";
 import AuthorAnalysis from "@/components/AuthorAnalysis.vue";
+import BottomBanner from "@/components/BottomBanner.vue";
+import TopBanner from "@/components/TopBanner.vue";
 import qs from "qs";
 export default {
-  components: { ArticlesTable, AuthorAnalysis },
+  components: { ArticlesTable, AuthorAnalysis, TopBanner, BottomBanner },
   data() {
     return {
       scholar: {
@@ -77,12 +87,9 @@ export default {
         tags: [{t:"software",w:60},{t:"math",w:200},{t:"chinese",w:35},{t:"english",w:100}],
         pubs: [
           {
-            id: 20, //论文在数据库的id，而非在列表中的id
+            i: 20, //论文在数据库的id，而非在列表中的id
             title: "讨口子",
-            authors:[{
-              id:1,
-              name:"扣子"
-            }],
+            r:1,
             year: "2020.1.2",
             publisher: "上海出版社",
             n_download: 0,
@@ -91,7 +98,14 @@ export default {
         ],
         n_citation: 1910,
         n_download: 201,
-        h_index: 175
+        h_index: 175,
+        isidentify:1
+      },
+      user:{
+        username: "Lorem ipsum",
+        email: "lorem@ipsum.com",
+        sex:"男",
+        description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, tenetur asperiores. Laborum sint id iste deleniti, aut labore placeat ipsam, accusantium magni tempore dolores numquam repudiandae aliquam quam aperiam cumque.",  
       },
       currentTab: "articles",
     };
@@ -108,6 +122,7 @@ export default {
                     switch (res.data.errno) {
                     case 0:
                         this.scholar=res.data.scholar
+                        this.user=res.data.user
                         break;
                     }
                 })
@@ -120,14 +135,20 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.info_entry{
+  text-align: left;
+  margin: 20px 40px;
+  line-height: 32px;
+}
 .user_box {
   width: 100%;
 }
 .inner_box {
+  width: 72%;
   margin: auto;
 }
 .inner_box2 {
-  width: 800px;
+  width: 60%;
   margin: auto;
 }
 .head_box {

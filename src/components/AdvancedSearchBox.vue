@@ -80,9 +80,7 @@
         <el-divider v-if="!hide" />
         <div class="button-group" v-show="!hide">
           <el-button @click="clearInput" type="text">重置条件</el-button>
-          <el-button @click="searchClick" class="search-btn" type="primary"
-            >检索</el-button
-          >
+          <button @click="searchClick" class="el_btn btnblue">检索</button>
         </div>
       </el-card>
       <div class="toggleBtnWrapper">
@@ -112,7 +110,7 @@ export default {
         { logic: 0, entry: 2, input: "" },
         { logic: 0, entry: 3, input: "" },
       ],
-      options: ["篇名", "关键词", "作者", "第一作者","所属期刊"],
+      options: ["篇名", "关键词", "期刊名", "作者"],
       timerange: "",
       pickerOptions: {
         shortcuts: [
@@ -164,10 +162,10 @@ export default {
       this.timerange = "";
     },
     searchClick() {
-      this.$store.state.advancecontent=this.queries
-      this.$store.state.timerange=this.timerange;
-      this.$store.state.type=2;
-      this.$router.push('/searchPaper');
+      this.$store.state.advancecontent = this.queries;
+      this.$store.state.timerange = this.timerange;
+      this.$store.state.type = 2;
+      this.$router.push("/searchPaper");
     },
     toggleBtnClick() {
       this.hide = !this.hide;
@@ -182,8 +180,8 @@ export default {
 <style lang="scss" scoped>
 .search {
   .container {
-    max-width: 1200px;
-    padding: 60px 25px;
+    max-width: 100%;
+    padding: 30px 15px;
     .box-card {
       padding: 5px 0 10px;
 
@@ -249,7 +247,23 @@ export default {
       }
     }
   }
-
+  .el_btn {
+          width: 110px;
+          font-size:16px;
+          color:white;
+          background-color: #66CCFF;
+          border-radius:10px;
+          border: 1px solid rgba(150, 169, 183, 0.413);
+          padding: 8px 10px;
+          margin: 5px 40px;
+          transition: 0.2s;
+        }
+        .el_btn:hover {
+          box-shadow: 0 2px 3px 0 rgba(0,0,0,0.25),0 4px 8px 0 rgba(0,0,0,0.20);
+        }
+        .btnblue{
+          background-color:#66CCFF;
+        }
   .toggleBtn {
     position: absolute;
     transform: rotate(90deg);
