@@ -21,6 +21,9 @@
             </div>
         </div>
         <div id="recommend">
+            <div id="cloud">
+                <div ref="wordcloud" class="wordcloud"></div>
+            </div>
             <div v-for="i in recommendAuthors.length" :key=i>
                 <el-card class="authorCard">
                     <div slot="header">
@@ -37,9 +40,6 @@
                         <div style="float:left">论文总引用量：{{recommendAuthors[i-1].n_citation}}</div>
                     </div>
                 </el-card>
-            </div>
-            <div id="cloud">
-                <div ref="wordcloud" class="wordcloud"></div>
             </div>
             <div id="random">您可能对这些感兴趣。。。</div>
             <div id="recommendPaper">
@@ -218,6 +218,7 @@ export default {
                     id: 18,
                     title: "数学论文1",
                     year: "2020",
+                    authors:[{id:1,name:"作者"}],
                     publisher: "北京出版社",
                     n_download: 36,
                     n_citation: 19,
@@ -382,7 +383,7 @@ export default {
         },
         paperDetail(paperID) {
             //进入id为paperID的论文详情页面
-            this.$message.success(paperID);
+            this.$store.state.paperid=paperID;
             this.$router.push('/Paperdetail');
         },
     }
