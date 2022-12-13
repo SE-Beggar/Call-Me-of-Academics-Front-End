@@ -1,5 +1,6 @@
 <template>
   <div>
+    <TopBanner/>
     <div class="user_box">
       <div class="inner_box">
         <div class="head_box">
@@ -44,11 +45,11 @@
     <div class="user_info">
       <div class="inner_box2">
         <el-tabs v-model="currentTab" @tab-click="">
-          <el-tab-pane label="发表文献" name="articles">
+          <el-tab-pane style="min-height:600px;" label="发表文献" name="articles">
             <ArticlesTable :papers="scholar.pubs" />
           </el-tab-pane>
           <!-- 这里引入了 echarts 图表 -->
-          <el-tab-pane label="信息分析" name="analysis">
+          <el-tab-pane style="min-height:600px;" label="信息分析" name="analysis">
             <AuthorAnalysis
               :name="scholar.name"
               :nCitationSum="scholar.n_citation"
@@ -60,15 +61,18 @@
         </el-tabs>
       </div>
     </div>
+    <BottomBanner/>
   </div>
 </template>
 
 <script>
 import ArticlesTable from "@/components/ArticlesTable.vue";
 import AuthorAnalysis from "@/components/AuthorAnalysis.vue";
+import BottomBanner from "@/components/BottomBanner.vue";
+import TopBanner from "@/components/TopBanner.vue";
 import qs from "qs";
 export default {
-  components: { ArticlesTable, AuthorAnalysis },
+  components: { ArticlesTable, AuthorAnalysis, TopBanner, BottomBanner },
   data() {
     return {
       scholar: {
@@ -125,10 +129,11 @@ export default {
   width: 100%;
 }
 .inner_box {
+  width: 72%;
   margin: auto;
 }
 .inner_box2 {
-  width: 800px;
+  width: 60%;
   margin: auto;
 }
 .head_box {

@@ -5,9 +5,14 @@
         <img src="../assets/image/style_img/header.png" style="float:left;height:72px;">
       </div>
 
-      <!-- <div class="top_mid">
-        这里是导航区
-      </div> -->
+      <div class="top_mid">
+        <ul>
+          <li><a href="/">宣传页</a></li>
+          <li><a href="/main">主页面</a></li>
+          <li><a href="/searchpaper">查论文</a></li>
+          <li><a href="/searchauthor">查学者</a></li>
+        </ul>
+      </div>
       
       <div class="top_right">
         <div v-if="this.$store.state.islogin===false">
@@ -57,7 +62,6 @@ export default {
   box-shadow: 10rpx 10rpx 10rpx rgb(0 0 0 / 18%);
   overflow: hidden;
 }
-
 .top_left {
   float:left;
   margin-left: 40px;
@@ -67,9 +71,33 @@ export default {
 }
 .top_mid{
   float: left;
-  height: 68px;
+  height: 72px;
   width: 400px;
-  border: 2px solid orange;
+}
+.top_mid ul{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0);
+  height: 72px;
+}
+.top_mid li {
+  float: left;
+}
+.top_mid li a {
+  display: block;
+  height: 72px;
+  line-height: 72px;
+  font-weight: 600;
+  color: black;
+  text-align: center;
+  padding: 0 26px;
+  text-decoration: none;
+}
+.top_mid li a:hover {
+  background-color: rgba(0,0,0,0.5);
+  color: white;
 }
 .top_right {
   float:right;

@@ -56,7 +56,7 @@
             </el-upload>
             <div style="margin-top:20px;">
               <button class="el_btn" @click="upload()">上传</button>
-              <button class="el_btn" @click="uploadinfo = false">确定</button>
+              <button class="el_btn" @click="uploadinfo = false">取消</button>
               <!-- <el-button type="primary" @click="upload()">上传</el-button>
               <el-button type="primary" @click="file2InfoVisible = false">确 定</el-button> -->
             </div>
