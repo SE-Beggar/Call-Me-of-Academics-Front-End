@@ -161,7 +161,6 @@ export default {
                 name: '生物'
             },
         ],
-            value: 1,
             input: '',
             select: '',
             recommendAuthors: [//推荐的学者列表（4个），初始为数学学科的学者即authors[0]
@@ -316,7 +315,7 @@ export default {
                     },
                 ],
             ],
-            recommendPapers: [//推荐的论文列表（10篇），初始为数学论文即papers[0]
+            recommendPapers: [//随机推荐的论文列表（10篇）
                 {
                     "id": 18,//论文在数据库的id，而非在列表中的id
                     "title": "数学论文1",
@@ -337,96 +336,6 @@ export default {
                     "downloadTimes": 109,
                     "referTimes": 93,
                 }
-            ],
-            papers: [
-                [//数学论文
-                    {
-                        "id": 18,
-                        "title": "数学论文1",
-                        "firstAuthorID": 20,
-                        "firstAuthor": "谭火彬",
-                        "date": "2020.1.1",
-                        "organization": "北京出版社",
-                        "downloadTimes": 36,
-                        "referTimes": 19,
-                    },
-                    {
-                        "id": 30,
-                        "title": "数学论文2",
-                        "firstAuthorID": 20,
-                        "firstAuthor": "讨口子",
-                        "date": "2020.1.2",
-                        "organization": "上海出版社",
-                        "downloadTimes": 109,
-                        "referTimes": 93,
-                    }
-                ],
-                [//物理论文
-                    {
-                        "id": 18,
-                        "title": "物理论文1",
-                        "firstAuthorID": 20,
-                        "firstAuthor": "谭火彬",
-                        "date": "2020.1.1",
-                        "organization": "北京出版社",
-                        "downloadTimes": 36,
-                        "referTimes": 19,
-                    },
-                    {
-                        "id": 30,
-                        "title": "物理论文2",
-                        "firstAuthorID": 20,
-                        "firstAuthor": "讨口子",
-                        "date": "2020.1.2",
-                        "organization": "上海出版社",
-                        "downloadTimes": 109,
-                        "referTimes": 93,
-                    }
-                ],
-                [//化学论文
-                    {
-                        "id": 18,
-                        "title": "化学论文1",
-                        "firstAuthorID": 20,
-                        "firstAuthor": "谭火彬",
-                        "date": "2020.1.1",
-                        "organization": "北京出版社",
-                        "downloadTimes": 36,
-                        "referTimes": 19,
-                    },
-                    {
-                        "id": 30,
-                        "title": "化学论文2",
-                        "firstAuthorID": 20,
-                        "firstAuthor": "讨口子",
-                        "date": "2020.1.2",
-                        "organization": "上海出版社",
-                        "downloadTimes": 109,
-                        "referTimes": 93,
-                    }
-                ],
-                [//生物论文
-                    {
-                        "id": 18,
-                        "title": "生物论文1",
-                        "firstAuthorID": 20,
-                        "firstAuthor": "谭火彬",
-                        "date": "2020.1.1",
-                        "organization": "北京出版社",
-                        "downloadTimes": 36,
-                        "referTimes": 19,
-                    },
-                    {
-                        "id": 30,
-                        "title": "生物论文2",
-                        "firstAuthorID": 20,
-                        "firstAuthor": "讨口子",
-                        "date": "2020.1.2",
-                        "organization": "上海出版社",
-                        "downloadTimes": 109,
-                        "referTimes": 93,
-                    }
-                ],
             ],
         }
     },
@@ -482,7 +391,6 @@ export default {
             })
             myChart.on('click', (params) => {//词云点击响应
                 this.recommendAuthors = this.authors[params.data.value - 1];
-                this.recommendPapers = this.papers[params.data.value - 1];
             })
         },
         search() {
@@ -505,10 +413,6 @@ export default {
             //进入id为paperID的论文详情页面
             this.$message.success(paperID);
             this.$router.push('/Paperdetail');
-        },
-        changeSubject() {
-            this.recommendAuthors=this.authors[this.value-1];
-            this.recommendPapers=this.papers[this.value-1];
         },
     }
 }
