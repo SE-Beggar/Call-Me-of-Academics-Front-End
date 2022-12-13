@@ -55,8 +55,8 @@
               <el-link icon="el-icon-paperclip" type="primary">添加需要上传的文件</el-link>
             </el-upload>
             <div style="margin-top:20px;">
-              <button class="el_btn" @click="upload()">上传</button>
-              <button class="el_btn" @click="uploadinfo = false">取消</button>
+              <button class="el_btn btnblue" @click="upload()">上传</button>
+              <button class="el_btn btnred" @click="uploadinfo = false">取消</button>
               <!-- <el-button type="primary" @click="upload()">上传</el-button>
               <el-button type="primary" @click="file2InfoVisible = false">确 定</el-button> -->
             </div>
@@ -127,7 +127,6 @@
   width: 40%;
   font-size:18px;
   color:white;
-  background-color: #66CCFF;
   border-radius:20px;
   border: 1px solid rgba(150, 169, 183, 0.413);
   padding: 2px 10px;
@@ -136,6 +135,18 @@
 }
 .el_btn:hover {
   box-shadow: 0 2px 3px 0 rgba(0,0,0,0.25),0 4px 8px 0 rgba(0,0,0,0.20);
+}
+.btnblue{
+  background-color:#66CCFF;
+}
+.btnred{
+  background-color:#FF6666;
+}
+.btnorange{
+  background-color: #FF9966;
+}
+.btngreen{
+  background-color: #99CC66;
 }
 </style>
 

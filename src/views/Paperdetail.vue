@@ -40,8 +40,8 @@
           <b>语言：</b>{{ paper.lang }}
         </p>
       </div>
-      <button class="el_btn1" @click="download">下载</button>
-      <button class="el_btn1" @click="preview">预览</button>
+      <button class="el_btn1 btnblue" @click="download">下载</button>
+      <button class="el_btn1 btngreen" @click="preview">预览</button>
       <h2>参考文献</h2>
       <el-table :data="paper.references.slice((currentPage - 1) * pagesize, currentPage * pagesize)" style="width: 100%"
         :current-page.sync="currentPage">
@@ -61,7 +61,7 @@
         <el-table-column prop="id" label="操作">
           <template slot-scope="scope">
             <!-- <el-button type="primary" @click="paperDetail(scope.row.id)">查看详情</el-button> -->
-            <button class="el_btn2" @click="paperDetail(scope.row.id)">查看详情</button>
+            <button class="el_btn2 btnblue" @click="paperDetail(scope.row.id)">查看详情</button>
           </template>
         </el-table-column>
       </el-table>
@@ -110,7 +110,6 @@ p{
   width: 18%;
   font-size:18px;
   color:white;
-  background-color: #66CCFF;
   border-radius:10px;
   border: 1px solid rgba(150, 169, 183, 0.413);
   padding: 5px;
@@ -124,7 +123,6 @@ p{
   width: 100px;
   font-size:16px;
   color:white;
-  background-color: #66CCFF;
   border-radius:10px;
   border: 1px solid rgba(150, 169, 183, 0.413);
   padding: 5px;
@@ -146,6 +144,18 @@ p{
 }
 .el_btn3:hover {
   box-shadow: 0 2px 3px 0 rgba(0,0,0,0.25),0 4px 8px 0 rgba(0,0,0,0.20);
+}
+.btnblue{
+  background-color:#66CCFF;
+}
+.btnred{
+  background-color:#FF6666;
+}
+.btnorange{
+  background-color: #FF9966;
+}
+.btngreen{
+  background-color: #99CC66;
 }
 </style>
 <script>

@@ -56,9 +56,12 @@
                 </el-table-column>
                 <el-table-column prop="id" label="操作">
                     <template slot-scope="scope">
-                        <el-button type="primary" @click="display(scope.row.id)">查看</el-button>
+                        <!-- <el-button type="primary" @click="display(scope.row.id)">查看</el-button>
                         <el-button type="primary" @click="accept(scope.row.id)">同意</el-button>
-                        <el-button type="danger" @click="refuse(scope.row.id)">拒绝</el-button>
+                        <el-button type="danger" @click="refuse(scope.row.id)">拒绝</el-button> -->
+                        <button class="el_btn2 btnblue" @click="display(scope.row.id)">查看</button>
+                        <button class="el_btn2 btngreen" @click="accept(scope.row.id)">同意</button>
+                        <button class="el_btn2 btnred" @click="refuse(scope.row.id)">拒接</button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -76,7 +79,7 @@
         <p class="desc"><b>认证信息：</b>{{'我是讨口子，来讨口饭吃'}}</p>
         <p class="desc"><b style="color: aqua;">这里是上传文件的下载链接！！！</b></p>
         <div style="margin-top:20px;">
-          <button class="el_btn" @click="displayinfo=false">查看完毕</button>
+          <button class="el_btn1" @click="displayinfo=false">查看完毕</button>
         </div>
       </div>
     </el-dialog>
@@ -167,7 +170,7 @@
   text-align: left;
   /* font-weight: 700; */
 }
-.el_btn {
+.el_btn1 {
   width: 40%;
   font-size:18px;
   color:white;
@@ -178,8 +181,37 @@
   margin: 10px 20px;
   transition: 0.2s;
 }
-.el_btn:hover {
+.el_btn1:hover {
   box-shadow: 0 2px 3px 0 rgba(0,0,0,0.25),0 4px 8px 0 rgba(0,0,0,0.20);
+}
+.el_btn2 {
+  width: 80px;
+  font-size:16px;
+  color:white;
+  background-color: #66CCFF;
+  border-radius:10px;
+  border: 1px solid rgba(150, 169, 183, 0.413);
+  padding: 5px 10px;
+  margin: 5px;
+  transition: 0.2s;
+}
+.el_btn2:hover {
+  box-shadow: 0 2px 3px 0 rgba(0,0,0,0.25),0 4px 8px 0 rgba(0,0,0,0.20);
+}
+.btnblack{
+  background-color:black;
+}
+.btnblue{
+  background-color:#66CCFF;
+}
+.btnred{
+  background-color:#FF6666;
+}
+.btnorange{
+  background-color: #FF9966;
+}
+.btngreen{
+  background-color: #99CC66;
 }
 </style>
 
