@@ -63,7 +63,8 @@
                 <el-table-column prop="n_citation" label="被引次数" sortable></el-table-column>
                 <el-table-column prop="id" label="操作">
                     <template slot-scope="scope">
-                        <el-button type="primary" @click="paperDetail(scope.row.id)">查看详情</el-button>
+                        <!-- <el-button type="primary" @click="paperDetail(scope.row.id)">查看详情</el-button> -->
+                        <button class="el_btn btnblue" @click="paperDetail(scope.row.id)">查看详情</button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -82,6 +83,35 @@
 </template>
 
 <style scoped>
+.el_btn {
+  width: 100px;
+  font-size:16px;
+  color:white;
+  background-color: #66CCFF;
+  border-radius:10px;
+  border: 1px solid rgba(150, 169, 183, 0.413);
+  padding: 5px;
+  margin: 5px;
+  transition: 0.2s;
+}
+.el_btn:hover {
+  box-shadow: 0 2px 3px 0 rgba(0,0,0,0.25),0 4px 8px 0 rgba(0,0,0,0.20);
+}
+.btnblack{
+  background-color:black;
+}
+.btnblue{
+  background-color:#66CCFF;
+}
+.btnred{
+  background-color:#FF6666;
+}
+.btnorange{
+  background-color: #FF9966;
+}
+.btngreen{
+  background-color: #99CC66;
+}
 #search {
     margin-top: 40px;
     margin-left: 10%;

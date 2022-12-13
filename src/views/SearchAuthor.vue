@@ -36,7 +36,9 @@
                         <div style="float:left">论文总引用量：{{scholars[i-1].n_citation}}</div>
                     </div>
                     <div v-if="scholars[i-1].isidentify==0">
-                        <el-button type="primary" @click="identify(scholars[i-1].id)">认证该学者</el-button>
+                        <!-- <el-button type="primary" @click="identify(scholars[i-1].id)">认证该学者</el-button> -->
+                        <button class="el_btn btnblue" @click="identify(scholars[i-1].id)"
+                         style="width:150px;">认证该学者</button>
                     </div>
                 </el-card>
             </div>

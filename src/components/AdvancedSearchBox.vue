@@ -80,9 +80,10 @@
         <el-divider v-if="!hide" />
         <div class="button-group" v-show="!hide">
           <el-button @click="clearInput" type="text">重置条件</el-button>
-          <el-button @click="searchClick" class="search-btn" type="primary"
+          <!-- <el-button @click="searchClick" class="search-btn" type="primary"
             >检索</el-button
-          >
+          > -->
+          <button @click="searchClick" class="el_btn btnblue">检索</button>
         </div>
       </el-card>
       <div class="toggleBtnWrapper">
@@ -245,6 +246,23 @@ export default {
         .search-btn {
           width: 120px;
           margin-left: 30px;
+        }
+        .el_btn {
+          width: 110px;
+          font-size:16px;
+          color:white;
+          background-color: #66CCFF;
+          border-radius:10px;
+          border: 1px solid rgba(150, 169, 183, 0.413);
+          padding: 8px 10px;
+          margin: 5px 40px;
+          transition: 0.2s;
+        }
+        .el_btn:hover {
+          box-shadow: 0 2px 3px 0 rgba(0,0,0,0.25),0 4px 8px 0 rgba(0,0,0,0.20);
+        }
+        .btnblue{
+          background-color:#66CCFF;
         }
       }
     }
