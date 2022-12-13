@@ -10,18 +10,17 @@
                     </el-select>
                     <el-button slot="append" icon="el-icon-search" v-on:click="search">搜索</el-button>
                 </el-input>
+                <div class="topp">
                 <p class="preview" v-for="item in searchlist">
                     <v-highlight-component :message='item' :search='sinput'/>
                 </p>
+                </div>
             </div>
             <div id="advancedSearch">
                 <el-link @click="toAdvanced">前往高级检索</el-link>
             </div>
         </div>
         <div id="recommend">
-            <div id="cloud">
-                <div ref="wordcloud" class="wordcloud"></div>
-            </div>
             <div v-for="i in recommendAuthors.length" :key=i>
                 <el-card class="authorCard">
                     <div slot="header">
@@ -38,6 +37,9 @@
                         <div style="float:left">论文总引用量：{{recommendAuthors[i-1].n_citation}}</div>
                     </div>
                 </el-card>
+            </div>
+            <div id="cloud">
+                <div ref="wordcloud" class="wordcloud"></div>
             </div>
             <div id="random">您可能对这些感兴趣。。。</div>
             <div id="recommendPaper">
@@ -122,7 +124,12 @@
     float: left;
     margin-top: 20px;
 }
+div.topp{
+    position:absolute;
+    width:70%;
+}
 p.preview{
+    background-color: azure;
     margin: auto;
     width:70%;
     border-style:dashed;
@@ -216,7 +223,7 @@ export default {
                     n_citation: 19,
                 }
             ],
-            searchlist:["预览1","预览2"]
+            searchlist:["预览1","预览2","预览3","预览4","预览5","预览6","预览7","预览8"]
         }
     },
     created(){
