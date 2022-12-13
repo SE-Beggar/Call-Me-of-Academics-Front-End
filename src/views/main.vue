@@ -1,7 +1,6 @@
 <template>
     <div>
-      <!-- <TopBanner/> -->
-
+        <TopBanner/>
         <div id="search">
             <div id="normalSearch">
                 <el-input placeholder="请输入内容" v-model="input">
@@ -14,7 +13,7 @@
                 </el-input>
             </div>
             <div id="advancedSearch">
-                <el-link @click="toAdvanced">前往高级检索</el-link>
+                <el-link @click="toAdvanced">使用高级检索</el-link>
             </div>
         </div>
         <div id="recommend">
@@ -61,8 +60,7 @@
                 </el-table>
             </div>
         </div>
-
-      <BottomBanner/>
+        <BottomBanner/>
     </div>
 </template>
 
