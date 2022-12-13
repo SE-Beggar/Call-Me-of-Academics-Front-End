@@ -7,6 +7,9 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 // import { setupElementUI } from './plugins/element'
 import * as echarts from 'echarts';
+
+import highlight from 'v-highlight-component';
+Vue.use(highlight);
 Vue.prototype.$echarts = echarts
 
 Vue.use(ElementUI);

@@ -1,19 +1,22 @@
 <template>
   <div>
-    <el-input v-model="input" placeholder="请输入内容" style="width: 200px;border:1px solid red;"></el-input>
+    <div v-for="item in searchlists">
+    <v-highlight-component :message='item' :search='search'/>
+  </div>
   </div>
 </template>
 
 <script>
 import qs from "qs";
-// import SingleReview from "./SingleReview";
-export default {
-  data() {
-    return {
-      input:""
-    }
-  },
-}
+export default{
+    data(){
+        return{
+            input:"这是",
+            searchlists:["这是句子1","这是句子2"],
+            search: ['句子'],
+        };
+    },
+};
 </script>
 
 <style scoped>

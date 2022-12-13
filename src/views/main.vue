@@ -2,7 +2,7 @@
     <div>
         <div id="search">
             <div id="normalSearch">
-                <el-input placeholder="请输入内容" v-model="input">
+                <el-input placeholder="请输入内容" v-model="input" @input="preview">
                     <el-select v-model="select" slot="prepend" placeholder="论文检索">
                         <el-option label="论文检索" value="1"></el-option>
                         <el-option label="学者检索" value="2"></el-option>
@@ -10,6 +10,9 @@
                     </el-select>
                     <el-button slot="append" icon="el-icon-search" v-on:click="search">搜索</el-button>
                 </el-input>
+                <p class="preview" v-for="item in searchlist">
+                    <v-highlight-component :message='item' :search='sinput'/>
+                </p>
             </div>
             <div id="advancedSearch">
                 <el-link @click="toAdvanced">前往高级检索</el-link>
@@ -119,6 +122,14 @@
     float: left;
     margin-top: 20px;
 }
+p.preview{
+    margin: auto;
+    width:70%;
+    border-style:dashed;
+    border-width:1px;
+    border-radius: 4px;
+    border-color: gray;
+}
 </style>
 
 
@@ -151,6 +162,9 @@ export default {
                 name: '生物'
             },
         ],
+            sinput:[],
+            timer: null,
+            len:false,
             value: 1,
             input: '',
             select: '',
@@ -202,6 +216,7 @@ export default {
                     n_citation: 19,
                 }
             ],
+            searchlist:["预览1","预览2"]
         }
     },
     created(){
@@ -226,6 +241,62 @@ export default {
         this.initchart();
     },
     methods: {
+        preview(){
+            this.clearTimer()
+            this.sinput=[]
+            this.sinput[0]=this.input
+            if (this.input && this.input.length > 0) {
+                this.len = true
+                this.timer = setTimeout(() => {
+                    this.$axios({
+                        method: 'post', 
+                        url: '/api/paper/preview/',
+                            data: qs.stringify({
+                                input:this.input
+                            })
+                        })
+                        .then(res => {
+                            switch (res.data.errno) {
+                            case 0:
+                                this.searchlist=res.data.lists;
+                                break;
+                            }
+                        })
+                        .catch(err => {
+                            console.log(err);  
+                        })             
+                }, 500)
+            } else {
+                if (this.len) {
+                    this.$axios({
+                        method: 'post', 
+                        url: '/api/paper/preview/',
+                            data: qs.stringify({
+                                input:this.input
+                            })
+                        })
+                        .then(res => {
+                            switch (res.data.errno) {
+                            case 0:
+                                this.searchlist=res.data.lists;
+                                break;
+                            }
+                        })
+                        .catch(err => {
+                            console.log(err);  
+                        })                   
+                }
+                if (this.input == '') {
+                    this.len = false
+                    return
+                }
+            }
+        },
+        clearTimer() {
+            if (this.timer) {
+                clearTimeout(this.timer)
+            }
+        },
         initchart() {
             let myChart = this.$echarts.init(this.$refs.wordcloud);
             myChart.setOption({
@@ -274,7 +345,8 @@ export default {
             })
             myChart.on('click', (params) => {//词云点击响应
                 this.recommendAuthors = this.authors[params.data.value - 1];
-            })
+            }
+            )
         },
         search() {
             if (this.select == 2) {
@@ -305,9 +377,6 @@ export default {
             //进入id为paperID的论文详情页面
             this.$message.success(paperID);
             this.$router.push('/Paperdetail');
-        },
-        changeSubject() {
-            this.recommendAuthors=this.authors[this.value-1];
         },
     }
 }
