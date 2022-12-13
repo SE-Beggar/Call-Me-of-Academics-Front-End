@@ -1,7 +1,6 @@
 <template>
   <div>
     <TopBanner/>
-    <div style="height:100px;"></div>
 
     <div class="home">
       <h1>当前已有的页面</h1>

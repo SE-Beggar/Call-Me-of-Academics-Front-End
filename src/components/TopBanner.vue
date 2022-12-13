@@ -1,25 +1,28 @@
 <template>
-  <div id="top_banner">
-    <div class="top_left" @click="gotoMain">
-      <img src="../assets/image/style_img/header.png" style="float:left;height:72px;">
-    </div>
+  <div>
+    <div id="top_banner">
+      <div class="top_left" @click="gotoMain">
+        <img src="../assets/image/style_img/header.png" style="float:left;height:72px;">
+      </div>
 
-    <!-- <div class="top_mid">
-      这里是导航区
-    </div> -->
-    
-    <div class="top_right">
-      <div v-if="this.$store.state.islogin===false">
-      <div class="div_btn1" style="float:left" @click="gotoLogin">登录</div>
-      <div class="div_btn1" style="float:left" @click="gotoRegister">注册</div>
-      </div>
-      <div v-if="this.$store.state.islogin===true" class="head_box" @click="gotoProfile">
-        <div class="username">
-          <p>{{this.$store.state.username}}</p>
+      <!-- <div class="top_mid">
+        这里是导航区
+      </div> -->
+      
+      <div class="top_right">
+        <div v-if="this.$store.state.islogin===false">
+        <div class="div_btn1" style="float:left" @click="gotoLogin">登录</div>
+        <div class="div_btn1" style="float:left" @click="gotoRegister">注册</div>
         </div>
-        <img src="../assets/image/heads/1.png">
+        <div v-if="this.$store.state.islogin===true" class="head_box" @click="gotoProfile">
+          <div class="username">
+            <p>{{this.$store.state.username}}</p>
+          </div>
+          <img src="../assets/image/heads/1.png">
+        </div>
       </div>
     </div>
+    <div style="height:72px;"></div>
   </div>
 </template>
 

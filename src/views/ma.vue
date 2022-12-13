@@ -1,5 +1,7 @@
 <template>
     <div>
+      <!-- <TopBanner/> -->
+
         <div id="search">
             <div id="normalSearch">
                 <el-input placeholder="请输入内容" v-model="input">
@@ -59,6 +61,8 @@
                 </el-table>
             </div>
         </div>
+
+      <BottomBanner/>
     </div>
 </template>
 
@@ -67,7 +71,7 @@
     margin-top: 50px;
     margin-left: 10%;
     width: 80%;
-    float: left;
+    /* float: left; */
 }
 #normalSearch {
     width: 90%;
@@ -85,7 +89,7 @@
     margin-top: 20px;
     margin-left: 10%;
     width: 80%;
-    float: left;
+    /* float: left; */
 }
 .menuItem {
     width: 10%;
@@ -130,69 +134,76 @@
 同时在create中给recommendAuthors赋初始值authors[0](recommendPapers类似)
 然后根据点击导航栏给recommendAuthors、recommendPapers赋值（无需交互，已完成），展示的是recommendAuthors、recommendPapers中的内容
 */
+import BottomBanner from "@/components/BottomBanner.vue";
+import TopBanner from "@/components/TopBanner.vue";
 import "echarts-wordcloud/dist/echarts-wordcloud";
 import "echarts-wordcloud/dist/echarts-wordcloud.min";
 import qs from "qs";
 export default {
+    components: { TopBanner, BottomBanner },
     data() {
         return {
             options: [
-            {
-                value: 1,
-                name: '数学'
-            }, {
-                value: 2,
-                name: '物理'
-            }, {
-                value: 3,
-                name: '化学'
-            }, {
-                value: 4,
-                name: '生物'
-            },
-        ],
+                {
+                    value: 1,
+                    name: "数学"
+                },
+                {
+                    value: 2,
+                    name: "物理"
+                },
+                {
+                    value: 3,
+                    name: "化学"
+                },
+                {
+                    value: 4,
+                    name: "生物"
+                },
+            ],
             value: 1,
-            input: '',
-            select: '',
+            input: "",
+            select: "",
             recommendAuthors: [
                 {
-                    id:1,
-                    name:"学者1",
-                    position:"教授",//学者职位
-                    n_pubs:201,//文献数量
+                    id: 1,
+                    name: "学者1",
+                    position: "教授",
+                    n_pubs: 201,
                     n_citation: 19,
                 },
                 {
-                    id:1,
-                    name:"学者2",
-                    position:"教授",//学者职位
-                    n_pubs:201,//文献数量
+                    id: 1,
+                    name: "学者2",
+                    position: "教授",
+                    n_pubs: 201,
                     n_citation: 19,
                 },
                 {
-                    id:1,
-                    name:"学者3",
-                    position:"教授",//学者职位
-                    n_pubs:201,//文献数量
+                    id: 1,
+                    name: "学者3",
+                    position: "教授",
+                    n_pubs: 201,
                     n_citation: 19,
                 },
             ],
             authors: [
                 [{
-                    id:1,
-                    name:"学者1",
-                    position:"教授",//学者职位
-                    n_pubs:201,//文献数量
-                    n_citation: 19,
-                }],[{
-                    id:1,
-                    name:"学者2",
-                    position:"教授",//学者职位
-                    n_pubs:201,//文献数量
-                    n_citation: 19,
-                }]
+                        id: 1,
+                        name: "学者1",
+                        position: "教授",
+                        n_pubs: 201,
+                        n_citation: 19,
+                    }],
+                [{
+                        id: 1,
+                        name: "学者2",
+                        position: "教授",
+                        n_pubs: 201,
+                        n_citation: 19,
+                    }]
             ],
-            recommendPapers: [//推荐的论文列表（10篇），初始为数学论文即papers[0]
+            recommendPapers: [
                 {
                     id: 18,
                     title: "数学论文1",
@@ -202,25 +213,25 @@ export default {
                     n_citation: 19,
                 }
             ],
-        }
+        };
     },
-    created(){
+    created() {
         this.$axios({
-                    method: 'get',
-                    url: '/api/paper/main/'
-                    })
-                    .then(res => {          
-                    switch (res.data.errno) {
-                        case 0:
-                            this.authors=res.data.authors;
-                            this.recommendAuthors=this.authors[0];
-                            this.recommendPapers=res.data.papers;
-                        break;
-                    }
-                    })
-                    .catch(err => {
-                    console.log(err);         
-                    })     
+            method: "get",
+            url: "/api/paper/main/"
+        })
+            .then(res => {
+            switch (res.data.errno) {
+                case 0:
+                    this.authors = res.data.authors;
+                    this.recommendAuthors = this.authors[0];
+                    this.recommendPapers = res.data.papers;
+                    break;
+            }
+        })
+            .catch(err => {
+            console.log(err);
+        });
     },
     mounted() {
         this.initchart();
@@ -247,15 +258,13 @@ export default {
                         // maskImage: maskImage,
                         textStyle: {
                             color: function () {
-                                return (
-                                    "rgb(" +
+                                return ("rgb(" +
                                     Math.round(Math.random() * 255) +
                                     ", " +
                                     Math.round(Math.random() * 255) +
                                     ", " +
                                     Math.round(Math.random() * 255) +
-                                    ")"
-                                );
+                                    ")");
                             }
                         },
                         //位置相关设置
@@ -271,43 +280,43 @@ export default {
                         data: this.options
                     }
                 ]
-            })
-            myChart.on('click', (params) => {//词云点击响应
+            });
+            myChart.on("click", (params) => {
                 this.recommendAuthors = this.authors[params.data.value - 1];
-            })
+            });
         },
         search() {
             if (this.select == 2) {
                 //搜学者 关键词this.input
-                this.$store.state.searchcontent=this.input;
-                this.$router.push('/searchAuthor')
+                this.$store.state.searchcontent = this.input;
+                this.$router.push("/searchAuthor");
             }
-            else if(this.select ==3){
-                this.$store.state.searchcontent=this.input;
-                this.$router.push('/searchvenue')
+            else if (this.select == 3) {
+                this.$store.state.searchcontent = this.input;
+                this.$router.push("/searchvenue");
             }
             else {
-                this.$store.state.type=1;
-                this.$store.state.searchcontent=this.input;
-                this.$router.push('/searchPaper')
+                this.$store.state.type = 1;
+                this.$store.state.searchcontent = this.input;
+                this.$router.push("/searchPaper");
             }
         },
         toAdvanced() {
             //前往高级检索页面
-            this.$store.state.type=2;
-            this.$router.push('/advancedsearch')
+            this.$store.state.type = 2;
+            this.$router.push("/advancedsearch");
         },
         authorDetail(author) {
-            this.$store.state.authorID=author;
-            this.$router.push('/scholar')
+            this.$store.state.authorID = author;
+            this.$router.push("/scholar");
         },
         paperDetail(paperID) {
             //进入id为paperID的论文详情页面
             this.$message.success(paperID);
-            this.$router.push('/Paperdetail');
+            this.$router.push("/Paperdetail");
         },
         changeSubject() {
-            this.recommendAuthors=this.authors[this.value-1];
+            this.recommendAuthors = this.authors[this.value - 1];
         },
     }
 }
