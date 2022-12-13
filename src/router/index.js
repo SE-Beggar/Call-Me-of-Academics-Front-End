@@ -40,7 +40,7 @@ const routes = [
   },{
     path: '/main',
     name: 'Main',
-    component: () => import('../views/ma.vue')
+    component: () => import('../views/main.vue')
   },{
     path: '/searchPaper',
     name: 'SearchPaper',
